@@ -1,21 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import * as AuthService from './services/auth.service';
-
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import Login from './components/Login';
-import Register from './components/Register';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import BoardUser from './components/BoardUser';
-import BoardModerator from './components/BoardModerator';
-import BoardAdmin from './components/BoardAdmin';
+import store from './state/store';
+import routes from './routes';
+import * as AuthService from './state/services/auth.service';
 
-const App = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -240,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+}));
+
+export default function App() {
+  const classes = useStyles();
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
@@ -23,96 +42,52 @@ const App = () => {
 
     if (user) {
       setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes('ROLE_MODERATOR'));
-      setShowAdminBoard(user.roles.includes('ROLE_ADMIN'));
     }
   }, []);
 
-  const logOut = () => {
-    AuthService.logout();
+  const [open, setOpen] = React.useState(true);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={'/'} className="navbar-brand">
-          ProBook
-        </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={'/home'} className="nav-link">
-              Home
-            </Link>
-          </li>
-
-          {showModeratorBoard && (
-            <li className="nav-item">
-              <Link to={'/mod'} className="nav-link">
-                Moderator Board
-              </Link>
-            </li>
+    <BrowserRouter>
+      <Provider store={store}>
+        <div className={classes.root}>
+          <CssBaseline />
+          {currentUser ? (
+            <>
+              <Header />
+              <Sidebar />
+              <main>
+                {routes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    component={route.component}
+                    exact={route.exact}
+                  />
+                ))}
+                <Route exact path="*" render={() => <Redirect to="/" />} />
+              </main>
+            </>
+          ) : (
+            <>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="*" render={() => <Redirect to="/login" />} />
+            </>
           )}
-
-          {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={'/admin'} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
-          )}
-
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={'/user'} className="nav-link">
-                User
-              </Link>
-            </li>
-          )}
+          {/* <Notification
+              onCloseHandler={() => store.dispatch(hideNotifications())}
+            />
+            <PageLoadingBackdrop /> */}
         </div>
-
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={'/profile'} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={'/login'} className="nav-link">
-                Login
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to={'/register'} className="nav-link">
-                Sign Up
-              </Link>
-            </li>
-          </div>
-        )}
-      </nav>
-
-      <div className="container mt-3">
-        <Switch>
-          <Route exact path={['/', '/home']} component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/user" component={BoardUser} />
-          <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} />
-        </Switch>
-      </div>
-    </div>
+      </Provider>
+    </BrowserRouter>
   );
-};
-
-export default App;
+}

@@ -5,9 +5,10 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
+  TOGGLE_DRAWER,
 } from './types';
 
-import AuthService from '../services/auth.service';
+import * as AuthService from '../services/auth.service';
 
 export const register = (username, email, password) => (dispatch) => {
   return AuthService.register(username, email, password).then(
@@ -84,3 +85,5 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
 };
+
+export const handleDrawerToggle = () => ({ type: TOGGLE_DRAWER });

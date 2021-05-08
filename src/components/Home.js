@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from 'react';
-
-import * as UserService from '../services/user.service';
+import React from 'react';
+import * as AuthService from '../state/services/auth.service';
 
 const Home = () => {
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-
-        setContent(_content);
-      }
-    );
-  }, []);
+  const currentUser = AuthService.getCurrentUser();
 
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>{content}</h3>
+        <h3>
+          <strong>{currentUser.username}</strong> Home
+        </h3>
       </header>
     </div>
   );

@@ -4,13 +4,19 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  TOGGLE_DRAWER,
 } from '../actions/types';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
-const initialState = user
+const info = user
   ? { isLoggedIn: true, user }
   : { isLoggedIn: false, user: null };
+
+const initialState = {
+  ...info,
+  drawer: true,
+};
 
 export default function auth(state = initialState, action) {
   const { type, payload } = action;
@@ -43,6 +49,11 @@ export default function auth(state = initialState, action) {
         ...state,
         isLoggedIn: false,
         user: null,
+      };
+    case TOGGLE_DRAWER:
+      return {
+        ...state,
+        drawer: !state.drawer,
       };
     default:
       return state;
