@@ -15,7 +15,7 @@ const info = user
 
 const initialState = {
   ...info,
-  drawer: true,
+  drawer: false,
 };
 
 export default function auth(state = initialState, action) {

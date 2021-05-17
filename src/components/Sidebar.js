@@ -12,7 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import { handleDrawerToggle } from '../state/actions/auth';
 
 const drawerWidth = 240;
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 function Sidebar({ open, handleDrawerToggle }) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
 
   return (
     <Drawer
@@ -68,7 +69,13 @@ function Sidebar({ open, handleDrawerToggle }) {
       <Divider />
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem
+            button
+            key={text}
+            onClick={() => {
+              history.push('/add-property-details');
+            }}
+          >
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
             </ListItemIcon>

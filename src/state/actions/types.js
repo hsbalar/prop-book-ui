@@ -7,3 +7,9 @@ export const LOGOUT = 'LOGOUT';
 export const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
+
+export const ADD_PROPERTY = 'ADD_PROPERTY';
+export const DELETE_PROPERTY = 'DELETE_PROPERTY';
+export const UPDATE_PROPERTY = 'UPDATE_PROPERTY';
+export const ON_CHANGE_FIELD = 'ON_CHANGE_FIELD';
+export const GET_PROPERTY_LIST = 'GET_PROPERTY_LIST';
