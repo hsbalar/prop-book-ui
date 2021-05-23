@@ -12,8 +12,8 @@ const initialState = {
   propertyDetails: {
     personName: null,
     personPhone: null,
-    saleType: null,
-    listType: 'buy',
+    isNewProperty: 'New',
+    listType: 'Buy',
     categoryType: null,
     propertyType: null,
     city: null,

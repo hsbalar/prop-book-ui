@@ -45,23 +45,24 @@ export default function App() {
       <Provider store={store}>
         <div className={classes.root}>
           <CssBaseline />
-          {currentUser && (
+          {currentUser ? (
             <>
               <Header />
               <Sidebar />
+              <main className={classes.content}>
+                {routes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    component={route.component}
+                    exact={route.exact}
+                  />
+                ))}
+              </main>
             </>
-          )}
-          <main className={currentUser ? classes.content : ''}>
-            {routes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-                exact={route.exact}
-              />
-            ))}
+          ) : (
             <Route exact path="/login" component={Login} />
-          </main>
+          )}
           {/* <Notification
               onCloseHandler={() => store.dispatch(hideNotifications())}
             />
