@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   layout: {
     width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -63,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Basic Details', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
   switch (step) {
@@ -110,7 +108,7 @@ export function AddPropertyDetails() {
       <Box className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            Add New Property Details
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (

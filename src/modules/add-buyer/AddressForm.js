@@ -2,9 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
 import { connect } from 'react-redux';
@@ -33,9 +30,6 @@ export function AddressForm({ propertyDetails, handleFieldChange }) {
     propertyDetails;
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Basic Details
-      </Typography>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography gutterBottom variant="body1">
