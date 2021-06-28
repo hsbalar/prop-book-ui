@@ -1,5 +1,5 @@
 import Home from '../components/Home';
-import AddPropertyDetails from '../modules/add-buyer/AddPropertyDetails';
+import AddPropertyDetails from '../modules/add-property';
 
 const routes = [
   {

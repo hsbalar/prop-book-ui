@@ -11,11 +11,11 @@ import {
   listData,
   categoryData,
   isNewPropertyData,
-} from './constants';
+} from '../constants';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  chip: {
     display: 'flex',
     flexWrap: 'wrap',
     '& > *': {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function AddressForm({ propertyDetails, handleFieldChange }) {
+export function BasicDetailsForm({ propertyDetails, handleFieldChange }) {
   const classes = useStyles();
   const { listType, categoryType, propertyType, isNewProperty } =
     propertyDetails;
@@ -32,10 +32,8 @@ export function AddressForm({ propertyDetails, handleFieldChange }) {
     <React.Fragment>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography gutterBottom variant="body1">
-            List Property For
-          </Typography>
-          <Box className={classes.root}>
+          <Typography variant="body1">List Property For</Typography>
+          <Box className={classes.chip}>
             {listData.map((item) => (
               <Chip
                 key={item}
@@ -51,10 +49,8 @@ export function AddressForm({ propertyDetails, handleFieldChange }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography gutterBottom variant="body1">
-            Category
-          </Typography>
-          <Box className={classes.root}>
+          <Typography variant="body1">Category</Typography>
+          <Box className={classes.chip}>
             {categoryData.map((item) => (
               <Chip
                 key={item}
@@ -70,10 +66,8 @@ export function AddressForm({ propertyDetails, handleFieldChange }) {
         </Grid>
         {categoryType && (
           <Grid item xs={12}>
-            <Typography gutterBottom variant="body1">
-              Property Type
-            </Typography>
-            <Box className={classes.root}>
+            <Typography variant="body1">Property Type</Typography>
+            <Box className={classes.chip}>
               {propertyTypeData[categoryType].map((item) => (
                 <Chip
                   key={item}
@@ -91,10 +85,8 @@ export function AddressForm({ propertyDetails, handleFieldChange }) {
 
         {['Buy', 'Sell'].includes(listType) && (
           <Grid item xs={12}>
-            <Typography gutterBottom variant="body1">
-              Available For
-            </Typography>
-            <Box className={classes.root}>
+            <Typography variant="body1">Available For</Typography>
+            <Box className={classes.chip}>
               {isNewPropertyData.map((item) => (
                 <Chip
                   key={item}
@@ -119,4 +111,6 @@ function mapStateToProps(state) {
   return { propertyDetails };
 }
 
-export default connect(mapStateToProps, { handleFieldChange })(AddressForm);
+export default connect(mapStateToProps, { handleFieldChange })(
+  BasicDetailsForm
+);

@@ -6,8 +6,24 @@ export const categoryData = ['Residential', 'Commercial', 'Agricultural'];
 export const propertyTypeData = {
   Residential: ['Apartment', 'House / Villa', 'Plot', 'Farm House'],
   Commercial: ['Apartment', 'Office', 'Shop', 'Complex', 'Plot'],
-  Agricultural: ['land'],
+  Agricultural: ['Land'],
 };
+
+export const postByData = ['Broker', 'Owner', 'Builder', 'Individual'];
+
+export const bedroomsData = ['1 BHK', '2 BHK', '3 BHK', '4 BHK', '4+ BHK'];
+
+export const unitData = [
+  'Square Feet',
+  'Square Yard',
+  'Square Meter',
+  'Acre',
+  'Guntha',
+  'Ground',
+  'Hectare',
+  'Vigha',
+  'Cent',
+];
 
 export const citiesData = [
   'Ahmedabad',
