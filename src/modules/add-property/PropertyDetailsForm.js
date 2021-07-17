@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
@@ -14,7 +14,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-
+import { inWords } from '../../state/services/utils';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
   const {
+    categoryType,
     bedrooms,
     noOfFloors,
     propertyFloorNo,
@@ -51,141 +52,176 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
     isNegotiable,
   } = propertyDetails;
   const classes = useStyles();
+  const [priceInWords, setPriceInWords] = useState('');
+  const [pricePerUnitInWords, setPricePerUnitInWords] = useState('');
+  useEffect(() => {
+    if (price) setPriceInWords(inWords(price));
+  }, [price]);
+  useEffect(() => {
+    if (pricePerUnit) setPricePerUnitInWords(inWords(pricePerUnit));
+  }, [pricePerUnit]);
+
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography variant="body1">Bedrooms</Typography>
-          <Box className={classes.chip}>
-            {bedroomsData.map((item) => (
-              <Chip
-                key={item}
-                label={item}
-                color={bedrooms === item ? 'primary' : 'default'}
-                deleteIcon={bedrooms === item ? <DoneIcon /> : null}
-                onClick={() => handleFieldChange({ bedrooms: item })}
-              />
-            ))}
-          </Box>
-        </Grid>
-        <Divider />
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="No of Floors"
-            value={noOfFloors}
-            fullWidth
-            onChange={(e) => handleFieldChange({ noOfFloors: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Property Building/Floor No."
-            fullWidth
-            value={propertyFloorNo}
-            onChange={(e) =>
-              handleFieldChange({ propertyFloorNo: e.target.value })
-            }
-          />
-        </Grid>
-        <Divider />
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="Area"
-            value={builtUpArea}
-            fullWidth
-            placeholder="Built-up Area"
-            onChange={(e) => handleFieldChange({ builtUpArea: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="Carpet Area"
-            fullWidth
-            value={carpetArea}
-            onChange={(e) => handleFieldChange({ carpetArea: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <InputLabel id="demo-simple-select-label">Area Unit Type</InputLabel>
-          <Select
-            labelId="unit list"
-            id="unit-list"
-            value={areaUnit}
-            fullWidth
-            label="Area Unit Type"
-            onChange={(e) => handleFieldChange({ areaUnit: e.target.value })}
-          >
-            {unitData.map((unit) => (
-              <MenuItem key={unit} value={unit}>
-                {unit}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Total Price"
-            fullWidth
-            value={price}
-            onChange={(e) => handleFieldChange({ price: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Price per / sq.ft."
-            fullWidth
-            value={pricePerUnit}
-            onChange={(e) =>
-              handleFieldChange({ pricePerUnit: e.target.value })
-            }
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={isNegotiable}
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid container spacing={3}>
+          {categoryType !== 'Agricultural' ? (
+            <Grid item xs={12}>
+              <Typography variant="body1">Bedrooms</Typography>
+              <Box className={classes.chip}>
+                {bedroomsData.map((item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    color={bedrooms === item ? 'primary' : 'default'}
+                    deleteIcon={bedrooms === item ? <DoneIcon /> : null}
+                    onClick={() => handleFieldChange({ bedrooms: item })}
+                  />
+                ))}
+              </Box>
+            </Grid>
+          ) : (
+            <></>
+          )}
+          {categoryType !== 'Agricultural' ? (
+            <>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="No of Floors"
+                  value={noOfFloors}
+                  fullWidth
+                  type="number"
                   onChange={(e) =>
-                    handleFieldChange({ isNegotiable: e.target.checked })
+                    handleFieldChange({ noOfFloors: e.target.value })
                   }
-                  name="checkedA"
                 />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Property Building/Floor No."
+                  fullWidth
+                  type="number"
+                  value={propertyFloorNo}
+                  onChange={(e) =>
+                    handleFieldChange({ propertyFloorNo: e.target.value })
+                  }
+                />
+              </Grid>
+            </>
+          ) : (
+            <></>
+          )}
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Built-up Area"
+              value={builtUpArea}
+              fullWidth
+              type="number"
+              placeholder="Total area"
+              onChange={(e) =>
+                handleFieldChange({ builtUpArea: e.target.value })
               }
-              label="Is Price Negotiable"
             />
-          </FormGroup>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Carpet Area"
+              fullWidth
+              type="number"
+              value={carpetArea}
+              onChange={(e) =>
+                handleFieldChange({ carpetArea: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <InputLabel id="demo-simple-select-label">
+              Area Unit Type
+            </InputLabel>
+            <Select
+              labelId="unit list"
+              id="unit-list"
+              value={areaUnit}
+              fullWidth
+              label="Area Unit Type"
+              onChange={(e) => handleFieldChange({ areaUnit: e.target.value })}
+            >
+              {unitData.map((unit) => (
+                <MenuItem key={unit} value={unit}>
+                  {unit}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Total Price"
+              fullWidth
+              value={price}
+              helperText={priceInWords ? priceInWords : ''}
+              onChange={(e) => handleFieldChange({ price: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Price per / sq.ft."
+              fullWidth
+              value={pricePerUnit}
+              helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
+              onChange={(e) =>
+                handleFieldChange({ pricePerUnit: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={isNegotiable}
+                    onChange={(e) =>
+                      handleFieldChange({ isNegotiable: e.target.checked })
+                    }
+                    name="checkedA"
+                  />
+                }
+                label="Is Price Negotiable"
+              />
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12} md={6}>
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd-MM-yyyy"
               id="date-picker-inline"
               label="Available From"
               fullWidth
-              value={availableFrom ? new Date(availableFrom) : null}
-              onChange={(value) => handleFieldChange({ availableFrom: value })}
+              value={availableFrom ? new Date(availableFrom) : new Date()}
+              onChange={(value) =>
+                handleFieldChange({
+                  availableFrom: value.toString(),
+                })
+              }
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
             />
-          </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <TextField
+              label="About"
+              fullWidth
+              value={about}
+              multiline
+              rows={4}
+              onChange={(e) => handleFieldChange({ about: e.target.value })}
+            />
+          </Grid>
+          <Divider />
         </Grid>
-        <Grid item xs={12} md={12}>
-          <TextField
-            label="About"
-            fullWidth
-            value={about}
-            multiline
-            rows={4}
-            onChange={(e) => handleFieldChange({ about: e.target.value })}
-          />
-        </Grid>
-        <Divider />
-      </Grid>
+      </MuiPickersUtilsProvider>
     </React.Fragment>
   );
 }

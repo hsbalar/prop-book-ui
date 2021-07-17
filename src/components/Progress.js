@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => {
   });
 });
 
-export const Progress = ({ status }) => {
+export const Progress = ({ status, title }) => {
   const classes = useStyles();
   if (status === 'progress') {
     return (
       <>
         <LinearProgress className={classes.progress} />
         <Typography className={classes.mainTitle} variant="h6">
-          Creating Property Details Data...
+          {title}
         </Typography>
         <Typography
           variant="body1"
@@ -55,14 +55,14 @@ export const Progress = ({ status }) => {
   return <></>;
 };
 
-export const Completed = ({ status }) => {
+export const Completed = ({ status, title }) => {
   const classes = useStyles();
   if (status === 'success') {
     return (
       <>
         <CheckCircleIcon className={classes.circleCheck} />
         <Typography className={classes.mainTitle} variant="h6">
-          New Property Data Saved.
+          {title}
         </Typography>
         <Typography
           variant="body1"

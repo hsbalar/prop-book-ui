@@ -56,28 +56,30 @@ function LocationDetailsForm({ propertyDetails, handleFieldChange }) {
             label="Person Name"
             value={personName}
             fullWidth
-            onChange={(e) => handleFieldChange({ postBy: e.target.value })}
+            onChange={(e) => handleFieldChange({ personName: e.target.value })}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             required
-            label="Person PhoneNo"
+            label="Person Phone No"
             fullWidth
             value={personPhone}
             onChange={(e) => handleFieldChange({ personPhone: e.target.value })}
           />
         </Grid>
         <Grid item xs={12} md={12}>
+          <Box style={{ marginBottom: '16px' }}>
+            <Typography variant="h6">Property Location</Typography>
+          </Box>
           <Autocomplete
             id="city-dropdown"
             options={citiesData}
-            getOptionLabel={(option) => option}
             value={city}
             renderInput={(params) => (
               <TextField {...params} variant="standard" label="Select City" />
             )}
-            onChange={(e) => handleFieldChange({ city: e.target.value })}
+            onChange={(e, newValue) => handleFieldChange({ city: newValue })}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -92,7 +94,7 @@ function LocationDetailsForm({ propertyDetails, handleFieldChange }) {
         <Grid item xs={12} md={6}>
           <TextField
             required
-            label="Locality"
+            label="Area / Society"
             fullWidth
             value={locality}
             onChange={(e) => handleFieldChange({ locality: e.target.value })}

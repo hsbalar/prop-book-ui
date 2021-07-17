@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import { format } from 'date-fns';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ function Review({ propertyDetails }) {
       <Grid container spacing={2}>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+            Basic details
           </Typography>
           <Grid container>
             <>
@@ -80,7 +81,7 @@ function Review({ propertyDetails }) {
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+            Owner/Broker Details
           </Typography>
           <Grid container>
             <>
@@ -120,7 +121,7 @@ function Review({ propertyDetails }) {
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            {'_'}
+            ___
           </Typography>
           <Grid container>
             <>
@@ -149,7 +150,7 @@ function Review({ propertyDetails }) {
             </>
             <>
               <Grid item xs={6}>
-                <Typography gutterBottom>Locality/Society</Typography>
+                <Typography gutterBottom>Area/Society</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography gutterBottom>{locality || '-'}</Typography>
@@ -202,12 +203,19 @@ function Review({ propertyDetails }) {
                 <Typography gutterBottom>Available From</Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography gutterBottom>{availableFrom || '-'}</Typography>
+                <Typography gutterBottom>
+                  {availableFrom
+                    ? format(new Date(availableFrom), 'dd-MM-yyyy')
+                    : '-'}
+                </Typography>
               </Grid>
             </>
           </Grid>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
+          <Typography variant="h6" gutterBottom className={classes.title}>
+            ___
+          </Typography>
           <Grid container>
             <>
               <Grid item xs={6}>

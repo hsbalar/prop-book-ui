@@ -18,6 +18,7 @@ import LocationDetailsForm from './LocationDetailsForm';
 import PropertyDetailsForm from './PropertyDetailsForm';
 import Review from './Review';
 import { handleFieldChange } from '../../state/actions/propertyDetails';
+import { Progress, Completed } from '../../components/Progress';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -90,6 +91,8 @@ export function AddPropertyDetails() {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    if (activeStep === 3) {
+    }
   };
 
   const handleBack = () => {
@@ -156,7 +159,7 @@ export function AddPropertyDetails() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Save Details' : 'Next'}
                   </Button>
                 </div>
               </React.Fragment>

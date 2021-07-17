@@ -4,3 +4,5 @@ export const handleFieldChange = (payload) => ({
   type: ON_CHANGE_FIELD,
   payload,
 });
+
+export const saveProperty = (payload) => {};
