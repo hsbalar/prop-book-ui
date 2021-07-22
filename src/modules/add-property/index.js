@@ -17,13 +17,10 @@ import BasicDetailsForm from './BasicDetailsForm';
 import LocationDetailsForm from './LocationDetailsForm';
 import PropertyDetailsForm from './PropertyDetailsForm';
 import Review from './Review';
-import { handleFieldChange } from '../../state/actions/propertyDetails';
+import { saveProperty } from '../../state/actions/propertyDetails';
 import { Progress, Completed } from '../../components/Progress';
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
   layout: {
     width: 'auto',
     [theme.breakpoints.up(700 + theme.spacing(2) * 2)]: {
@@ -85,13 +82,14 @@ function getStepContent(step) {
   }
 }
 
-export function AddPropertyDetails() {
+export function AddPropertyDetails({ saveProperty }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === 3) {
+      saveProperty();
     }
   };
 
@@ -176,6 +174,6 @@ function mapStateToProps(state) {
   return { propertyDetails };
 }
 
-export default connect(mapStateToProps, { handleFieldChange })(
+export default connect(mapStateToProps, { handleFieldChange, saveProperty })(
   AddPropertyDetails
 );

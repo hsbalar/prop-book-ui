@@ -1,4 +1,8 @@
-import { GET_PROPERTY_LIST, ON_CHANGE_FIELD } from '../actions/types';
+import {
+  GET_PROPERTY_LIST,
+  ON_CHANGE_FIELD,
+  CHANGE_STATUS,
+} from '../actions/types';
 
 const initialState = {
   buyer: {
@@ -32,6 +36,7 @@ const initialState = {
     about: '',
     availableFrom: null,
   },
+  status: null,
 };
 
 export default function property(state = initialState, action) {
@@ -50,6 +55,11 @@ export default function property(state = initialState, action) {
           ...state.propertyDetails,
           ...payload,
         },
+      };
+    case CHANGE_STATUS:
+      return {
+        ...state,
+        status: action.status,
       };
     default:
       return state;
