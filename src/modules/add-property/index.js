@@ -17,7 +17,7 @@ import BasicDetailsForm from './BasicDetailsForm';
 import LocationDetailsForm from './LocationDetailsForm';
 import PropertyDetailsForm from './PropertyDetailsForm';
 import Review from './Review';
-import { saveProperty } from '../../state/actions/propertyDetails';
+import * as actions from '../../state/actions/propertyDetails';
 import { Progress, Completed } from '../../components/Progress';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,13 +82,18 @@ function getStepContent(step) {
   }
 }
 
-export function AddPropertyDetails({ saveProperty }) {
+export function AddPropertyDetails({
+  status,
+  saveProperty,
+  handleStatusChange,
+}) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === 3) {
+      handleStatusChange('progress');
       saveProperty();
     }
   };
@@ -133,9 +138,7 @@ export function AddPropertyDetails({ saveProperty }) {
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
+                <Progress status={status} title={'Saving property details'} />
                 <Typography variant="subtitle1">
                   Your order number is #2001539. We have emailed your order
                   confirmation, and will send you an update when your order has
@@ -171,9 +174,10 @@ export function AddPropertyDetails({ saveProperty }) {
 
 function mapStateToProps(state) {
   const { propertyDetails } = state.propertyDetails;
-  return { propertyDetails };
+  return { propertyDetails, status: state.status };
 }
 
-export default connect(mapStateToProps, { handleFieldChange, saveProperty })(
-  AddPropertyDetails
-);
+export default connect(mapStateToProps, {
+  saveProperty: actions.saveProperty,
+  handleStatusChange: actions.handleStatusChange,
+})(AddPropertyDetails);

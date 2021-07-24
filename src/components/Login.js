@@ -89,7 +89,7 @@ export default function SignInSide() {
     AuthService.login(username, password).then(
       () => {
         history.push('/');
-        window.location.reload();
+        window.location.href = '/';
       },
       (error) => {
         const resMessage =
