@@ -10,7 +10,7 @@ const postData = (url, data) => {
 };
 
 const getData = (url) => {
-  return axios.post(GET_URL(url), { headers: authHeader() });
+  return axios.get(GET_URL(url), { headers: authHeader() });
 };
 
 export { postData, getData };

@@ -90,7 +90,6 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
                   label="No of Floors"
                   value={noOfFloors}
                   fullWidth
-                  type="number"
                   onChange={(e) =>
                     handleFieldChange({ noOfFloors: e.target.value })
                   }
@@ -100,7 +99,6 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
                 <TextField
                   label="Property Building/Floor No."
                   fullWidth
-                  type="number"
                   value={propertyFloorNo}
                   onChange={(e) =>
                     handleFieldChange({ propertyFloorNo: e.target.value })
@@ -158,6 +156,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
               label="Total Price"
               fullWidth
               value={price}
+              type="number"
               helperText={priceInWords ? priceInWords : ''}
               onChange={(e) => handleFieldChange({ price: e.target.value })}
             />
@@ -167,6 +166,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
               label="Price per / sq.ft."
               fullWidth
               value={pricePerUnit}
+              type="number"
               helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
               onChange={(e) =>
                 handleFieldChange({ pricePerUnit: e.target.value })
@@ -198,7 +198,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
               id="date-picker-inline"
               label="Available From"
               fullWidth
-              value={availableFrom ? new Date(availableFrom) : new Date()}
+              value={availableFrom ? new Date(availableFrom) : null}
               onChange={(value) =>
                 handleFieldChange({
                   availableFrom: value.toString(),

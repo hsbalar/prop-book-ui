@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import HomeIcon from '@material-ui/icons/Home';
 import ReceiptIcon from '@material-ui/icons/Receipt';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BasicDetailsForm from './BasicDetailsForm';
 import LocationDetailsForm from './LocationDetailsForm';
@@ -88,6 +88,7 @@ export function AddPropertyDetails({
   handleStatusChange,
 }) {
   const classes = useStyles();
+  const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -102,6 +103,11 @@ export function AddPropertyDetails({
     setActiveStep(activeStep - 1);
   };
 
+  const handleNavigation = () => history.push('/');
+
+  const handleAddNew = () => {
+    setActiveStep(0);
+  };
   return (
     <React.Fragment>
       <Breadcrumbs aria-label="breadcrumb">
@@ -139,11 +145,21 @@ export function AddPropertyDetails({
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Progress status={status} title={'Saving property details'} />
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
+                <Completed
+                  status={status}
+                  title={'Property details saved successfully'}
+                />
+                <Button onClick={handleAddNew} className={classes.button}>
+                  Add new
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNavigation}
+                  className={classes.button}
+                >
+                  Go to All Properties
+                </Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -173,8 +189,8 @@ export function AddPropertyDetails({
 }
 
 function mapStateToProps(state) {
-  const { propertyDetails } = state.propertyDetails;
-  return { propertyDetails, status: state.status };
+  const { propertyDetails, status } = state.propertyDetails;
+  return { propertyDetails, status };
 }
 
 export default connect(mapStateToProps, {

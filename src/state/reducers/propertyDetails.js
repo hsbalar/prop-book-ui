@@ -2,7 +2,33 @@ import {
   GET_PROPERTY_LIST,
   ON_CHANGE_FIELD,
   CHANGE_STATUS,
+  RESET_DETAILS,
 } from '../actions/types';
+
+const propertyDetails = {
+  personName: '',
+  personPhone: '',
+  address: '',
+  locality: '',
+  projectName: '',
+  postBy: 'Broker',
+  isNewProperty: 'New',
+  listType: 'Buy',
+  categoryType: '',
+  propertyType: '',
+  city: 'Surat',
+  bedrooms: '2 BHK',
+  noOfFloors: '',
+  propertyFloorNo: '',
+  about: '',
+  areaUnit: 'Square Feet',
+  price: 0,
+  pricePerUnit: 0,
+  builtUpArea: 0,
+  carpetArea: 0,
+  isNegotiable: false,
+  availableFrom: '',
+};
 
 const initialState = {
   buyer: {
@@ -13,29 +39,7 @@ const initialState = {
     list: [],
     total: 0,
   },
-  propertyDetails: {
-    personName: '',
-    personPhone: '',
-    address: '',
-    locality: '',
-    projectName: '',
-    postBy: 'Broker',
-    isNewProperty: 'New',
-    listType: 'Buy',
-    categoryType: '',
-    propertyType: '',
-    city: 'Surat',
-    bedrooms: '2 BHK',
-    noOfFloors: '',
-    propertyFloorNo: '',
-    price: '',
-    pricePerUnit: '',
-    areaUnit: 'Square Feet',
-    builtUpArea: '',
-    carpetArea: '',
-    about: '',
-    availableFrom: null,
-  },
+  propertyDetails,
   status: null,
 };
 
@@ -55,6 +59,11 @@ export default function property(state = initialState, action) {
           ...state.propertyDetails,
           ...payload,
         },
+      };
+    case RESET_DETAILS:
+      return {
+        ...state,
+        propertyDetails: { ...propertyDetails },
       };
     case CHANGE_STATUS:
       return {

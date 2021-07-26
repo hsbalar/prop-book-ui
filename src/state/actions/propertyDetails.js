@@ -13,10 +13,21 @@ export const handleStatusChange = (status) => ({
   status,
 });
 
-export const saveProperty = (payload) => (dispatch) => {
-  postData(SAVE_PROPERTY, payload).then(
+export const saveProperty = () => (dispatch, getState) => {
+  const { propertyDetails } = getState().propertyDetails;
+  postData(SAVE_PROPERTY, propertyDetails).then(
     (res) => {
-      console.log(res);
+      dispatch(handleStatusChange('success'));
+    },
+    (err) => {}
+  );
+};
+
+export const getProperty = (type) => (dispatch, getState) => {
+  const { propertyDetails } = getState().propertyDetails;
+  getData(SAVE_PROPERTY, propertyDetails).then(
+    (res) => {
+      dispatch(handleStatusChange('success'));
     },
     (err) => {}
   );
