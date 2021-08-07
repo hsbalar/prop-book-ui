@@ -9,7 +9,7 @@ try {
   Object.keys(envs).forEach(function (key) {
     console.log(key, envs[key]);
   });
-  core.setOutput('port', envs.port);
+  core.setOutput('port', 1000);
 
   // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
