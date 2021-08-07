@@ -5,6 +5,7 @@ try {
   // `who-to-greet` input defined in action metadata file
   const envObj = core.getInput('envars');
   const envs = JSON.parse(envObj);
+  console.log(envs);
   console.log(envs.url);
   core.setOutput('url', envs.url);
   // Object.keys(envs).forEach(function (key) {
