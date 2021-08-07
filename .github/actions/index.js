@@ -6,7 +6,7 @@ try {
   const envObj = core.getInput('envars');
   const envs = JSON.parse(envObj);
   console.log(envs);
-  console.log(envs.url);
+  console.log(envs['url']);
   core.setOutput('url', envs.url);
   // Object.keys(envs).forEach(function (key) {
   //   console.log(key, envs[key]);
