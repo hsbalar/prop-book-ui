@@ -36,5 +36,5 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output port
         run: |
-          echo "The port was ${{ steps.hello.outputs.port }}"
-          echo "The port was ${{ steps.hello.outputs.url }}"
+          echo "The port was - ${{fromJson(steps.hello.outputs.port).url}}"
+          echo "The port was + ${{fromJson(steps.hello.outputs.port).port}}"
