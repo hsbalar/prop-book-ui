@@ -35,4 +35,6 @@ jobs:
           envars: ${{github.event.inputs.envars}}
       # Use the output from the `hello` step
       - name: Get the output port
-        run: echo ${{ steps.hello.outputs }}
+        run: |
+          echo "The port was ${{ steps.hello.outputs.public_path }}"
+          echo "The port was ${{ steps.hello.outputs.some }}"
