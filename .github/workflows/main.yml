@@ -23,6 +23,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: "install packages"
+      run: |
+        npm install @actions/core
+        npm install @actions/github
+
       - name: Hello world action step
         uses: ./.github/actions
         id: hello
