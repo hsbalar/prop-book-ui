@@ -6,11 +6,10 @@ try {
   const envObj = core.getInput('envars');
   const envs = JSON.parse(envObj);
   console.log(envs);
-  // Object.keys(envs).forEach(function (key) {
-  //   console.log(key, envs[key]);
-  //   core.setOutput('' + key + '', envs[key]);
-  // });
-  core.setOutput('some', envs.some);
+  Object.keys(envs).forEach(function (key) {
+    console.log(key, envs[key]);
+  });
+  core.setOutput('port', envs.port);
 
   // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
