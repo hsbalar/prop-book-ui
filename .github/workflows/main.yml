@@ -23,11 +23,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      - name: Process Envs
-        runs:
-          using: 'node12'
-          main: './.github/scripts/index.js'
+      - name: Hello world action step
+        uses: ./.github/actions
+        id: hello
+        with:
+          envars: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output port
+        run: echo "The port was ${{ steps.hello.outputs.port }}"
