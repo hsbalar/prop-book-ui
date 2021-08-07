@@ -7,9 +7,11 @@ try {
   const envs = JSON.parse(envObj);
   console.log(envs);
   Object.keys(envs).forEach(function (key) {
-    console.log(key, envObj[key]);
-    core.setOutput(`${key}`, envs[key]);
+    console.log(key, envs[key]);
+    core.setOutput('' + key + '', envs[key]);
   });
+  core.setOutput('port', 1000);
+
   // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
   core.setFailed(error.message);
