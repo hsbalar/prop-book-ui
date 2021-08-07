@@ -5,10 +5,11 @@ try {
   // `who-to-greet` input defined in action metadata file
   const envObj = core.getInput('envars');
   const envs = JSON.parse(envObj);
-  console.log(envs);
-  Object.keys(envs).forEach(function (key) {
-    console.log(key, envs[key]);
-  });
+  console.log(envs.url);
+  core.setOutput('url', envs.url);
+  // Object.keys(envs).forEach(function (key) {
+  //   console.log(key, envs[key]);
+  // });
   core.setOutput('port', 1000);
 
   // Get the JSON webhook payload for the event that triggered the workflow
