@@ -5,7 +5,7 @@ try {
   // `who-to-greet` input defined in action metadata file
   const envObj = core.getInput('envars');
   Object.keys(envObj).forEach((key) => {
-    core.setOutput(key, envObj[key]);
+    core.setOutput(`${key}`, envObj[key]);
   });
   // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
