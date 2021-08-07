@@ -4,9 +4,11 @@ const github = require('@actions/github');
 try {
   // `who-to-greet` input defined in action metadata file
   const envObj = core.getInput('envars');
-
-  Object.keys(JSON.parse(envObj)).forEach((key) => {
-    core.setOutput(`${key}`, envObj[key]);
+  const envs = JSON.parse(envObj);
+  console.log(envs);
+  Object.keys(envs).forEach((key) => {
+    console.log(key, envObj[key]);
+    core.setOutput(`${key}`, envs[key]);
   });
   // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
