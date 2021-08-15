@@ -2,6 +2,8 @@ import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
+import StorageIcon from '@material-ui/icons/Storage';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -40,6 +42,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const routes = [
+  {
+    text: 'Home',
+    to: '/',
+    icon: <HomeIcon />,
+  },
+  {
+    text: 'Add Property',
+    to: '/add-property-details',
+    icon: <PostAddIcon />,
+  },
+  {
+    text: 'View All Property',
+    to: '/properties',
+    icon: <StorageIcon />,
+  },
+];
+
 function Sidebar({ open, handleDrawerToggle }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -67,19 +87,17 @@ function Sidebar({ open, handleDrawerToggle }) {
       </div>
       <Divider />
       <List>
-        {['Add Property'].map((text, index) => (
+        {routes.map((route, index) => (
           <ListItem
             button
-            key={text}
+            key={route.text}
             onClick={() => {
-              history.push('/add-property-details');
+              history.push(route.to);
               handleDrawerToggle();
             }}
           >
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon>{route.icon}</ListItemIcon>
+            <ListItemText primary={route.text} />
           </ListItem>
         ))}
       </List>

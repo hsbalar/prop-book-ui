@@ -3,6 +3,8 @@ import {
   ON_CHANGE_FIELD,
   CHANGE_STATUS,
   RESET_DETAILS,
+  SET_PROPERTY_LIST,
+  UPDATE_PROPERTY,
 } from '../actions/types';
 
 const propertyDetails = {
@@ -31,13 +33,12 @@ const propertyDetails = {
 };
 
 const initialState = {
-  buyer: {
+  tableData: {
     list: [],
+    page: 0,
     total: 0,
-  },
-  seller: {
-    list: [],
-    total: 0,
+    rowsPerPage: 5,
+    selection: {},
   },
   propertyDetails,
   status: null,
@@ -47,6 +48,14 @@ export default function property(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_PROPERTY_LIST:
+      return {
+        ...state,
+        tableData: {
+          ...state.tableData,
+          ...action.payload,
+        },
+      };
     case GET_PROPERTY_LIST:
       return {
         ...state,
@@ -57,6 +66,13 @@ export default function property(state = initialState, action) {
         ...state,
         propertyDetails: {
           ...state.propertyDetails,
+          ...payload,
+        },
+      };
+    case UPDATE_PROPERTY:
+      return {
+        ...state,
+        propertyDetails: {
           ...payload,
         },
       };

@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { format } from 'date-fns';
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Review({ propertyDetails }) {
+export default function Review({ propertyDetails }) {
   const classes = useStyles();
   const { listType, categoryType, propertyType, isNewProperty } =
     propertyDetails;
@@ -279,10 +278,3 @@ function Review({ propertyDetails }) {
     </>
   );
 }
-
-function mapStateToProps(state) {
-  const { propertyDetails } = state.propertyDetails;
-  return { propertyDetails };
-}
-
-export default connect(mapStateToProps, {})(Review);

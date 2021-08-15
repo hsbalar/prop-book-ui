@@ -6,13 +6,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import HomeIcon from '@material-ui/icons/Home';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import CustomizedBreadcrumbs from '../../components/Breadcrumb';
 import BasicDetailsForm from './BasicDetailsForm';
 import LocationDetailsForm from './LocationDetailsForm';
 import PropertyDetailsForm from './PropertyDetailsForm';
@@ -67,7 +65,7 @@ const steps = [
   'Review',
 ];
 
-function getStepContent(step) {
+function getStepContent(step, propertyDetails) {
   switch (step) {
     case 0:
       return <BasicDetailsForm />;
@@ -76,7 +74,7 @@ function getStepContent(step) {
     case 2:
       return <PropertyDetailsForm />;
     case 3:
-      return <Review />;
+      return <Review propertyDetails={propertyDetails} />;
     default:
       throw new Error('Unknown step');
   }
@@ -84,7 +82,9 @@ function getStepContent(step) {
 
 export function AddPropertyDetails({
   status,
+  propertyDetails,
   saveProperty,
+  updateProperty,
   handleStatusChange,
 }) {
   const classes = useStyles();
@@ -95,7 +95,8 @@ export function AddPropertyDetails({
     setActiveStep(activeStep + 1);
     if (activeStep === 3) {
       handleStatusChange('progress');
-      saveProperty();
+      if (propertyDetails._id) updateProperty();
+      else saveProperty();
     }
   };
 
@@ -108,27 +109,16 @@ export function AddPropertyDetails({
   const handleAddNew = () => {
     setActiveStep(0);
   };
+
+  const editType = propertyDetails._id ? 'Update' : 'Add New';
+
   return (
     <React.Fragment>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link
-          color="inherit"
-          component={RouterLink}
-          to={'/'}
-          className={classes.link}
-        >
-          <HomeIcon className={classes.icon} />
-          Home
-        </Link>
-        <Typography color="textPrimary" className={classes.link}>
-          <ReceiptIcon className={classes.icon} />
-          Add Buyer Details
-        </Typography>
-      </Breadcrumbs>
+      <CustomizedBreadcrumbs currentPage={`${editType} Property Details`} />
       <Box className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography variant="h5" align="center">
-            Add New Property Details
+            {editType} Property Details
           </Typography>
           <Stepper
             activeStep={activeStep}
@@ -163,7 +153,7 @@ export function AddPropertyDetails({
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, propertyDetails)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -196,4 +186,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   saveProperty: actions.saveProperty,
   handleStatusChange: actions.handleStatusChange,
+  updateProperty: actions.updateProperty,
 })(AddPropertyDetails);

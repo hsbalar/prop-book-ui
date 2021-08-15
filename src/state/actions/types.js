@@ -7,11 +7,16 @@ export const LOGOUT = 'LOGOUT';
 export const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
+export const SHOW_LOADER = 'SHOW_LOADER';
+export const HIDE_LOADER = 'HIDE_LOADER';
 
 export const ADD_PROPERTY = 'ADD_PROPERTY';
 export const DELETE_PROPERTY = 'DELETE_PROPERTY';
 export const UPDATE_PROPERTY = 'UPDATE_PROPERTY';
 export const ON_CHANGE_FIELD = 'ON_CHANGE_FIELD';
 export const GET_PROPERTY_LIST = 'GET_PROPERTY_LIST';
+export const SET_PROPERTY_LIST = 'SET_PROPERTY_LIST';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const RESET_DETAILS = 'RESET_DETAILS';
+
+export const SET_FILTER_TYPE = 'SET_FILTER_TYPE';
