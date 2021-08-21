@@ -18,10 +18,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
 
 import CustomizedBreadcrumbs from '../../components/Breadcrumb';
-import BottomNavigation from '../../components/PropertyTypeFilter';
 import Pagination from '../../components/Pagination';
 import AlertDialog from '../../components/AlertDialog';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
+import BottomNavigation from './PropertyTypeFilter';
 import FullScreenDialog from './FullScreenDialog';
 import * as actions from '../../state/actions/propertyDetails';
 
@@ -62,6 +62,7 @@ function AllProperty({
   const [openFullScreenDialog, setOpenFullScreenDialog] = useState(false);
   const { list, page, total, rowsPerPage, selection } = tableData;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getProperty({ listType, page, rowsPerPage }), [listType]);
   const numSelected = Object.values(selection).filter((el) => el).length;
 

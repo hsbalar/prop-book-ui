@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import Page404 from './components/Page404';
 import Login from './components/Login';
 import Home from './components/Home';
 import Loader from './components/Loader';
@@ -81,15 +82,20 @@ export default function App() {
             </>
           )}
           <main className={currentUser ? classes.content : ''}>
-            <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute exact path="/properties" component={AllProperty} />
-            <PrivateRoute
-              exact
-              path="/add-property-details"
-              component={AddPropertyDetails}
-            />
+            <Switch>
+              <PrivateRoute exact path="/" component={Home} />
+              <PrivateRoute exact path="/properties" component={AllProperty} />
+              <PrivateRoute
+                exact
+                path="/add-property-details"
+                component={AddPropertyDetails}
+              />
+              <Route exact path="/login" component={Login} />
+              <Route path="*">
+                <Page404 />
+              </Route>
+            </Switch>
           </main>
-          {!currentUser && <Route exact path="/login" component={Login} />}
           {/* <Notification
               onCloseHandler={() => store.dispatch(hideNotifications())}
             />

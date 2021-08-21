@@ -7,7 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { connect } from 'react-redux';
 
-import * as actions from '../state/actions/filters';
+import * as actions from '../../state/actions/filters';
 
 function PropertyTypeFilter({ listType, handleFilterTypeChange }) {
   return (

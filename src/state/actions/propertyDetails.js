@@ -7,14 +7,18 @@ import {
   HIDE_LOADER,
   UPDATE_PROPERTY,
   RESET_DETAILS,
+  SET_METRIX_DATA,
+  APPLY_FILTER,
 } from './types';
 
 import { getData, postData } from '../services/api.service';
 
 const API_SAVE_PROPERTY = '/save-property';
+const API_GET_METRIX = '/metrix';
 const API_UPDATE_PROPERTY = '/update-property';
 const API_DELETE_PROPERTY = '/delete-property';
 const API_GET_PROPERTY = '/properties';
+const API_FILTER = '/filter';
 
 export const handleFieldChange = (payload) => ({
   type: ON_CHANGE_FIELD,
@@ -34,6 +38,11 @@ export const receiveProperty = (list, propertyType) => ({
 
 export const setPropertyData = (payload) => ({
   type: SET_PROPERTY_LIST,
+  payload,
+});
+
+export const setMetrixData = (payload) => ({
+  type: SET_METRIX_DATA,
   payload,
 });
 
@@ -95,3 +104,30 @@ export const getProperty =
       }
     );
   };
+
+export const getMetrix = () => (dispatch) => {
+  dispatch({ type: SHOW_LOADER });
+  getData(API_GET_METRIX).then(
+    (res) => {
+      dispatch(setMetrixData(res.data));
+      dispatch({ type: HIDE_LOADER });
+    },
+    (err) => {
+      dispatch({ type: HIDE_LOADER });
+    }
+  );
+};
+
+export const applyFilter = () => (dispatch, getState) => {
+  const { listType, inputSearch } = getState().filters;
+  dispatch({ type: SHOW_LOADER });
+  postData(API_FILTER, { listType, inputSearch }).then(
+    (res) => {
+      // dispatch(setPropertyData(res.data));
+      dispatch({ type: HIDE_LOADER });
+    },
+    (err) => {
+      dispatch({ type: HIDE_LOADER });
+    }
+  );
+};

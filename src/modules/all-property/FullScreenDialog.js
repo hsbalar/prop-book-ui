@@ -13,7 +13,6 @@ import Slide from '@material-ui/core/Slide';
 import { format } from 'date-fns';
 
 import Review from '../add-property/Review';
-import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

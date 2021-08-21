@@ -5,6 +5,7 @@ import {
   RESET_DETAILS,
   SET_PROPERTY_LIST,
   UPDATE_PROPERTY,
+  SET_METRIX_DATA,
 } from '../actions/types';
 
 const propertyDetails = {
@@ -39,6 +40,11 @@ const initialState = {
     total: 0,
     rowsPerPage: 5,
     selection: {},
+  },
+  metrix: {
+    buy: 0,
+    sell: 0,
+    rent: 0,
   },
   propertyDetails,
   status: null,
@@ -85,6 +91,11 @@ export default function property(state = initialState, action) {
       return {
         ...state,
         status: action.status,
+      };
+    case SET_METRIX_DATA:
+      return {
+        ...state,
+        metrix: { ...state.metrix, ...action.payload },
       };
     default:
       return state;
