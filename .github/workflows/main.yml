@@ -10,6 +10,9 @@ on:
       envars:
         description: 'Runtime ENVs (ex: {"<file_name1>": "<file_content>"}'
         default: ''
+      buildvars:
+        description: 'Runtime ENVs (ex: {"<file_name1>": "<file_content>"}'
+        default: ''
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -43,6 +46,7 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output port
         run: |
+          echo "The port x....1 + ${{fromJson(github.event.inputs.buildvars).port}}"
+          echo "The port x....2 + ${{fromJson(github.event.inputs.buildvars).url}}"
           echo "The port was - ${{fromJson(steps.hello.outputs.port).url}}"
           echo "The port was + ${{fromJson(steps.hello.outputs.port).port}}"
-          echo "The port x + ${{fromJson(env.BUILDENV).port}}"
