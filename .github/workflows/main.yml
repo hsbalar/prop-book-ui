@@ -32,6 +32,8 @@ jobs:
         run: |
           envars=$(echo "${{ github.event.inputs.envars }}" | xargs)
           echo "BUILDENV=${envars}" >> $GITHUB_ENV
+          echo ${envars}
+          echo ${{env.BUILDENV}}
 
       - name: Hello world action step
         uses: ./.github/actions
