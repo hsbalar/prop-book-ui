@@ -12,7 +12,7 @@ on:
         default: ''
       buildvars:
         description: 'Runtime ENVs (ex: {"<file_name1>": "<file_content>"}'
-        default: ''
+        default: '{}'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
