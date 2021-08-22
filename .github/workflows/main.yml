@@ -28,6 +28,11 @@ jobs:
           npm install @actions/core
           npm install @actions/github
 
+      - name: Validate env variables
+        run: |
+          envars=$(echo "${{ github.event.inputs.envars }}" | xargs)
+          echo "BUILDENV=${envars}" >> $GITHUB_ENV
+
       - name: Hello world action step
         uses: ./.github/actions
         id: hello
@@ -38,3 +43,4 @@ jobs:
         run: |
           echo "The port was - ${{fromJson(steps.hello.outputs.port).url}}"
           echo "The port was + ${{fromJson(steps.hello.outputs.port).port}}"
+          echo "The port x + ${{fromJson(env.BUILDENV).port}}"
