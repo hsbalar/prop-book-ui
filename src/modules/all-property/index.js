@@ -63,7 +63,7 @@ function AllProperty({
   const { list, page, total, rowsPerPage, selection } = tableData;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => getProperty({ listType, page, rowsPerPage }), [listType]);
+  useEffect(() => getProperty(), [listType]);
   const numSelected = Object.values(selection).filter((el) => el).length;
 
   const handleDeleteRows = () => {

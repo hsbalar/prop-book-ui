@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux';
 
 import * as actions from '../../state/actions/filters';
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 function CustomizedSearchInput({
   inputSearch,
   handleFilterChange,
+  getProperty,
   applyFilter,
 }) {
   const classes = useStyles();
@@ -46,6 +48,19 @@ function CustomizedSearchInput({
         placeholder="Search by Property, Project, Area, Person, City"
         inputProps={{ 'aria-label': 'search' }}
       />
+      {inputSearch && (
+        <IconButton
+          type="submit"
+          className={classes.iconButton}
+          aria-label="search"
+          onClick={(e) => {
+            handleFilterChange('');
+            getProperty();
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      )}
       <Divider className={classes.divider} orientation="vertical" />
       <IconButton
         type="button"
@@ -68,6 +83,7 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   handleFilterChange: actions.handleFilterChange,
+  getProperty: propertyActions.getProperty,
   applyFilter: propertyActions.applyFilter,
 })(CustomizedSearchInput);
 
@@ -87,6 +103,7 @@ export default connect(mapStateToProps, {
 //   noOfFloors: '',
 //   propertyFloorNo: '',
 //   areaUnit: 'Square Feet',
+
 //   price: 0,
 //   pricePerUnit: 0,
 //   builtUpArea: 0,

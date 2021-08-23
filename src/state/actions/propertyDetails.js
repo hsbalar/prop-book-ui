@@ -90,20 +90,23 @@ export const deleteProperty = () => (dispatch, getState) => {
   );
 };
 
-export const getProperty =
-  (pageData, filters = null) =>
-  (dispatch) => {
-    dispatch({ type: SHOW_LOADER });
-    postData(API_GET_PROPERTY, { pageData, filters }).then(
-      (res) => {
-        dispatch(setPropertyData(res.data));
-        dispatch({ type: HIDE_LOADER });
-      },
-      (err) => {
-        dispatch({ type: HIDE_LOADER });
-      }
-    );
-  };
+export const getProperty = () => (dispatch, getState) => {
+  const { filters, propertyDetails } = getState();
+  const { listType } = filters;
+  const { tableData } = propertyDetails;
+  const { page, rowsPerPage } = tableData;
+  const pageData = { listType, page, rowsPerPage };
+  dispatch({ type: SHOW_LOADER });
+  postData(API_GET_PROPERTY, { pageData }).then(
+    (res) => {
+      dispatch(setPropertyData(res.data));
+      dispatch({ type: HIDE_LOADER });
+    },
+    (err) => {
+      dispatch({ type: HIDE_LOADER });
+    }
+  );
+};
 
 export const getMetrix = () => (dispatch) => {
   dispatch({ type: SHOW_LOADER });
