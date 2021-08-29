@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  successAtions: {
+    textAlign: 'center',
+  },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
@@ -104,7 +107,7 @@ export function AddPropertyDetails({
     setActiveStep(activeStep - 1);
   };
 
-  const handleNavigation = () => history.push('/');
+  const handleNavigation = () => history.push('/properties');
 
   const handleAddNew = () => {
     setActiveStep(0);
@@ -139,17 +142,24 @@ export function AddPropertyDetails({
                   status={status}
                   title={'Property details saved successfully'}
                 />
-                <Button onClick={handleAddNew} className={classes.button}>
-                  Add new
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNavigation}
-                  className={classes.button}
-                >
-                  Go to All Properties
-                </Button>
+                <Box className={classes.successAtions}>
+                  <Button
+                    onClick={handleAddNew}
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                  >
+                    Add new
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNavigation}
+                    className={classes.button}
+                  >
+                    Go to All Properties
+                  </Button>
+                </Box>
               </React.Fragment>
             ) : (
               <React.Fragment>

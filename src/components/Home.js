@@ -57,13 +57,13 @@ const Home = ({ metrix, getMetrix, filterChange }) => {
       clickHandler: () => action('Buy'),
     },
     {
-      title: 'Total Buyers',
+      title: 'Total Sellers',
       key: 'sell',
       count: metrix.sell,
       clickHandler: () => action('Sell'),
     },
     {
-      title: 'Total Buyers',
+      title: 'Total Rental',
       key: 'rent',
       count: metrix.rent,
       clickHandler: () => action('Rent'),

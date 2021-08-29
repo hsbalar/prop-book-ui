@@ -126,7 +126,13 @@ export const applyFilter = () => (dispatch, getState) => {
   dispatch({ type: SHOW_LOADER });
   postData(API_FILTER, { listType, inputSearch }).then(
     (res) => {
-      // dispatch(setPropertyData(res.data));
+      const { docs, totalDocs } = res.data;
+      const data = {
+        list: docs,
+        total: totalDocs,
+        selection: {},
+      };
+      dispatch(setPropertyData(data));
       dispatch({ type: HIDE_LOADER });
     },
     (err) => {
