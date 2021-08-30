@@ -24,3 +24,4 @@ export const CHANGE_FILTER_TEXT = 'CHANGE_FILTER_TEXT';
 export const APPLY_FILTER = 'APPLY_FILTER';
 
 export const SET_METRIX_DATA = 'SET_METRIX_DATA';
+export const SET_COLUMNS = 'SET_COLUMNS';

@@ -113,3 +113,5 @@ export default connect(mapStateToProps, {
 //   isNegotiable: false,
 
 //   availableFrom: '',
+
+// new field to be added ... is booking open ?

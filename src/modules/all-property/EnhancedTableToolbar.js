@@ -8,10 +8,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Accordion from '@material-ui/core/Accordion';
-import Button from '@material-ui/core/Button';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AddIcon from '@material-ui/icons/Add';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionActions from '@material-ui/core/AccordionActions';
 
 import CustomizedSearchInput from './CustomizedSearchInput';
 
@@ -36,15 +34,15 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 const types = {
-  Buy: 'from Buyers',
-  Sell: 'from Sellers',
-  Rent: 'On Rent',
+  Buy: 'Buyers',
+  Sell: 'Sellers',
+  Rent: 'Rental',
 };
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const [expanded, setExpanded] = useState(false);
-  const { numSelected, listType, deleteClick } = props;
+  const { numSelected, listType, deleteClick, navigateToAddProperty } = props;
 
   return (
     <>
@@ -69,7 +67,7 @@ const EnhancedTableToolbar = (props) => {
             id="tableTitle"
             component="div"
           >
-            Property List {types[listType]}
+            {types[listType]}
           </Typography>
         )}
 
@@ -80,36 +78,27 @@ const EnhancedTableToolbar = (props) => {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton
-              aria-label="filter list"
-              onClick={() => setExpanded(!expanded)}
-            >
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          <>
+            <Tooltip title="Add New">
+              <IconButton aria-label="add-new" onClick={navigateToAddProperty}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Filter list">
+              <IconButton
+                aria-label="filter list"
+                onClick={() => setExpanded(!expanded)}
+              >
+                <FilterListIcon />
+              </IconButton>
+            </Tooltip>
+          </>
         )}
       </Toolbar>
       <Accordion expanded={expanded} elevation={0}>
         <AccordionSummary aria-controls="panel1c-content" id="panel1c-header">
           <CustomizedSearchInput />
         </AccordionSummary>
-        <AccordionDetails className={classes.details}>
-          <div className={classes.column} />
-          <div className={clsx(classes.column, classes.helper)}>
-            <Typography variant="caption">
-              <a href="#secondary-heading-and-columns" className={classes.link}>
-                more filters
-              </a>
-            </Typography>
-          </div>
-        </AccordionDetails>
-        <AccordionActions>
-          <Button size="small">Clear</Button>
-          <Button size="small" variant="contained" color="primary">
-            Apply
-          </Button>
-        </AccordionActions>
       </Accordion>
     </>
   );

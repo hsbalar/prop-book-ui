@@ -9,12 +9,12 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
 import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux';
 
 import CustomizedBreadcrumbs from '../../components/Breadcrumb';
@@ -76,8 +76,8 @@ function AllProperty({
     setOpenFullScreenDialog(true);
   };
 
-  const editRowDetails = (item) => {
-    setEditRowData(item);
+  const editRowDetails = (item = null) => {
+    if (item) setEditRowData(item);
     history.push('/add-property-details');
   };
 
@@ -89,6 +89,7 @@ function AllProperty({
         <EnhancedTableToolbar
           numSelected={numSelected}
           listType={listType}
+          navigateToAddProperty={() => editRowDetails()}
           deleteClick={() => setOpen(true)}
         />
         <TableContainer component={Paper}>
@@ -96,13 +97,16 @@ function AllProperty({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">Actions</Typography>
+                  <Typography variant="body1"></Typography>
                 </TableCell>
                 {columns.map((text) => (
                   <TableCell key={text}>
                     <Typography variant="body1">{text}</Typography>
                   </TableCell>
                 ))}
+                <TableCell>
+                  <Typography variant="body1">Actions</Typography>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -120,33 +124,35 @@ function AllProperty({
                         checked={selection[row._id] || false}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                       />
-                      <Box display="flex">
-                        <IconButton
-                          color="primary"
-                          aria-label="upload picture"
-                          component="span"
-                          onClick={() => editRowDetails(row)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          color="primary"
-                          aria-label="view"
-                          component="span"
-                          onClick={() => viewRowDetails(row)}
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                      </Box>
                     </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => {
+                        viewRowDetails(row);
+                      }}
+                    >
+                      {row.projectName}
+                    </Link>
                   </TableCell>
                   <TableCell>{row.locality}</TableCell>
                   <TableCell>{row.categoryType}</TableCell>
                   <TableCell>{row.propertyType}</TableCell>
                   <TableCell>{row.postBy}</TableCell>
-                  <TableCell>{row.projectName}</TableCell>
                   <TableCell>{row.personName}</TableCell>
                   <TableCell>{row.projectPhone}</TableCell>
+                  <TableCell padding="checkbox">
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                      onClick={() => editRowDetails(row)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
               {list.length <= 0 && (

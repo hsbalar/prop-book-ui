@@ -57,3 +57,26 @@ export const citiesData = [
   'Vadodara',
   'Valsad',
 ];
+
+export const columns = [
+  'selection',
+  'projectName',
+  'personName',
+  'locality',
+  'createdAt',
+  'listType',
+  'propertyType',
+  'categoryType',
+  'availableFrom',
+  'isNewProperty',
+  'postBy',
+  'personPhone',
+  'about',
+  'address',
+  'builtUpArea',
+  'areaUnit',
+  'price',
+  'pricePerUnit',
+  'city',
+  'actions',
+];

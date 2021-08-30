@@ -1,8 +1,14 @@
-import { SET_FILTER_TYPE, CHANGE_FILTER_TEXT } from '../actions/types';
+import {
+  SET_FILTER_TYPE,
+  CHANGE_FILTER_TEXT,
+  SET_COLUMNS,
+} from '../actions/types';
+import { columns } from '../../modules/constants';
 
 const initialState = {
   listType: 'Buy',
   inputSearch: '',
+  columns,
 };
 
 export default function filters(state = initialState, action) {
@@ -18,6 +24,11 @@ export default function filters(state = initialState, action) {
       return {
         ...state,
         inputSearch: action.inputSearch,
+      };
+    case SET_COLUMNS:
+      return {
+        ...state,
+        columns: [...action.fields],
       };
     default:
       return state;

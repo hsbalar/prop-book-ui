@@ -2,9 +2,9 @@ import React from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Paper from '@material-ui/core/Paper';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import HomeIcon from '@material-ui/icons/Home';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
+import StoreIcon from '@material-ui/icons/Store';
 import { connect } from 'react-redux';
 
 import * as actions from '../../state/actions/filters';
@@ -24,19 +24,19 @@ function PropertyTypeFilter({ listType, handleFilterTypeChange }) {
           label="Find Buyers"
           value="Buy"
           style={{ backgroundColor: listType === 'Buy' ? '#abbcec47' : '' }}
-          icon={<RestoreIcon />}
+          icon={<HomeIcon />}
         />
         <BottomNavigationAction
           label="Find Sellers"
           value="Sell"
           style={{ backgroundColor: listType === 'Sell' ? '#abbcec47' : '' }}
-          icon={<FavoriteIcon />}
+          icon={<HomeWorkIcon />}
         />
         <BottomNavigationAction
           label="Find on Rent"
           value="Rent"
           style={{ backgroundColor: listType === 'Rent' ? '#abbcec47' : '' }}
-          icon={<LocationOnIcon />}
+          icon={<StoreIcon />}
         />
       </BottomNavigation>
     </Paper>

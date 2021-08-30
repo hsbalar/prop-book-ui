@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   title: {
-    marginTop: theme.spacing(1),
+    color: 'green',
   },
 }));
 
@@ -120,7 +120,7 @@ export default function Review({ propertyDetails }) {
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            ___
+            &nbsp;
           </Typography>
           <Grid container>
             <>
@@ -194,7 +194,9 @@ export default function Review({ propertyDetails }) {
                 <Typography gutterBottom>Is Negotiable ?</Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography gutterBottom>{isNegotiable || '-'}</Typography>
+                <Typography gutterBottom>
+                  {isNegotiable ? 'Yes' : 'No'}
+                </Typography>
               </Grid>
             </>
             <>
@@ -213,7 +215,7 @@ export default function Review({ propertyDetails }) {
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            ___
+            &nbsp;
           </Typography>
           <Grid container>
             <>
