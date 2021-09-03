@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,11 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Accordion from '@material-ui/core/Accordion';
 import AddIcon from '@material-ui/icons/Add';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 
+import ColumnsFilter from './ColumnsFilter';
 import CustomizedSearchInput from './CustomizedSearchInput';
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -39,10 +39,13 @@ const types = {
   Rent: 'Rental',
 };
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = ({
+  numSelected,
+  listType,
+  deleteClick,
+  navigateToAddProperty,
+}) => {
   const classes = useToolbarStyles();
-  const [expanded, setExpanded] = useState(false);
-  const { numSelected, listType, deleteClick, navigateToAddProperty } = props;
 
   return (
     <>
@@ -85,17 +88,12 @@ const EnhancedTableToolbar = (props) => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Filter list">
-              <IconButton
-                aria-label="filter list"
-                onClick={() => setExpanded(!expanded)}
-              >
-                <FilterListIcon />
-              </IconButton>
+              <ColumnsFilter />
             </Tooltip>
           </>
         )}
       </Toolbar>
-      <Accordion expanded={expanded} elevation={0}>
+      <Accordion expanded={false} elevation={0}>
         <AccordionSummary aria-controls="panel1c-content" id="panel1c-header">
           <CustomizedSearchInput />
         </AccordionSummary>

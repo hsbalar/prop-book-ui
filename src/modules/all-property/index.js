@@ -24,6 +24,7 @@ import EnhancedTableToolbar from './EnhancedTableToolbar';
 import BottomNavigation from './PropertyTypeFilter';
 import FullScreenDialog from './FullScreenDialog';
 import * as actions from '../../state/actions/propertyDetails';
+import { columnsMetaData } from './getColumns';
 
 const useStyles = makeStyles({
   table: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
   },
 });
 
-const columns = [
+const columnsa = [
   'Project',
   'Area',
   'Category',
@@ -48,6 +49,7 @@ const columns = [
 ];
 
 function AllProperty({
+  columns,
   listType,
   getProperty,
   setPropertyData,
@@ -81,6 +83,16 @@ function AllProperty({
     history.push('/add-property-details');
   };
 
+  const onCheckboxChange = (_id) => {
+    const selected = { ...selection };
+    selected[_id] = !selected[_id];
+    setPropertyData({ selection: selected });
+  };
+
+  const handleRenderAction = (name, data) => {
+    console.log(name, data);
+  };
+
   return (
     <>
       <CustomizedBreadcrumbs currentPage="Properties" />
@@ -96,65 +108,70 @@ function AllProperty({
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <Typography variant="body1"></Typography>
-                </TableCell>
-                {columns.map((text) => (
-                  <TableCell key={text}>
-                    <Typography variant="body1">{text}</Typography>
+                {columns.map((colName) => (
+                  <TableCell key={colName}>
+                    <Typography variant="body1">
+                      {columnsMetaData[colName].title}
+                    </Typography>
                   </TableCell>
                 ))}
-                <TableCell>
-                  <Typography variant="body1">Actions</Typography>
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {list.map((row) => (
                 <TableRow key={row._id}>
-                  <TableCell padding="checkbox">
-                    <Box display="flex">
-                      <Checkbox
-                        color="primary"
-                        onChange={() => {
-                          const selected = { ...selection };
-                          selected[row._id] = !selected[row._id];
-                          setPropertyData({ selection: selected });
-                        }}
-                        checked={selection[row._id] || false}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      component="button"
-                      variant="body2"
-                      onClick={() => {
-                        viewRowDetails(row);
-                      }}
-                    >
-                      {row.projectName}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{row.locality}</TableCell>
-                  <TableCell>{row.categoryType}</TableCell>
-                  <TableCell>{row.propertyType}</TableCell>
-                  <TableCell>{row.postBy}</TableCell>
-                  <TableCell>{row.personName}</TableCell>
-                  <TableCell>{row.projectPhone}</TableCell>
-                  <TableCell padding="checkbox">
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                      onClick={() => editRowDetails(row)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
+                  {columns.map((colName) => {
+                    const value = row[colName];
+                    const { render } = columnsMetaData[colName];
+                    return <>{render(value, handleRenderAction, row)}</>;
+                  })}
                 </TableRow>
               ))}
+
+              {/* <TableRow key={row._id}>
+                <TableCell padding="checkbox">
+                  <Box display="flex">
+                    <Checkbox
+                      color="primary"
+                      onChange={() => {
+                        const selected = { ...selection };
+                        selected[row._id] = !selected[row._id];
+                        setPropertyData({ selection: selected });
+                      }}
+                      checked={selection[row._id] || false}
+                      inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                  </Box>
+                </TableCell>
+                <TableCell>
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => {
+                      viewRowDetails(row);
+                    }}
+                  >
+                    {row.projectName}
+                  </Link>
+                </TableCell>
+                <TableCell>{row.locality}</TableCell>
+                <TableCell>{row.categoryType}</TableCell>
+                <TableCell>{row.propertyType}</TableCell>
+                <TableCell>{row.postBy}</TableCell>
+                <TableCell>{row.personName}</TableCell>
+                <TableCell>{row.projectPhone}</TableCell>
+                <TableCell padding="checkbox">
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                    onClick={() => editRowDetails(row)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow> */}
+
               {list.length <= 0 && (
                 <TableRow style={{ height: 200 }}>
                   <TableCell colSpan={12}>
@@ -207,10 +224,10 @@ function AllProperty({
 }
 
 function mapStateToProps(state) {
-  const { listType } = state.filters;
+  const { listType, columns } = state.filters;
   const { tableData } = state.propertyDetails;
 
-  return { listType, tableData };
+  return { listType, tableData, columns };
 }
 
 export default connect(mapStateToProps, {
