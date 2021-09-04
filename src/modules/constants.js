@@ -1,15 +1,11 @@
 export const listData = ['Buy', 'Sell', 'Rent'];
 export const isNewPropertyData = ['New', 'Resale'];
 
-export const categoryData = [
-  'Residential',
-  'Industrial / Commercial',
-  'Agricultural',
-];
+export const categoryData = ['Residential', 'Commercial', 'Agricultural'];
 
 export const propertyTypeData = {
   Residential: ['Flat / Apartment', 'House / Villa', 'Plot', 'Farm House'],
-  'Industrial / Commercial': ['Apartment', 'Office', 'Shop', 'Complex', 'Plot'],
+  Commercial: ['Apartment', 'Office', 'Shop', 'Complex', 'Plot'],
   Agricultural: ['Land'],
 };
 

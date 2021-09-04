@@ -8,7 +8,6 @@ import {
   UPDATE_PROPERTY,
   RESET_DETAILS,
   SET_METRIX_DATA,
-  APPLY_FILTER,
 } from './types';
 
 import { getData, postData } from '../services/api.service';

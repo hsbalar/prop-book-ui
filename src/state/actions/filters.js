@@ -10,4 +10,7 @@ export const handleFilterChange = (inputSearch) => ({
   inputSearch,
 });
 
-export const filterColumnsChange = (fields) => ({ type: SET_COLUMNS, fields });
+export const filterColumnsChange = (fields) => {
+  localStorage.setItem('columns', JSON.stringify(fields));
+  return { type: SET_COLUMNS, fields };
+};

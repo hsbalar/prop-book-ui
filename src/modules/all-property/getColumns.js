@@ -6,18 +6,20 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import { format } from 'date-fns';
 
-export const row = (value) => <TableCell>{value || '-'}</TableCell>;
+export const row = (value) => (
+  <TableCell style={{ maxWidth: 200 }}>{value || '-'}</TableCell>
+);
 
 export const columnsMetaData = {
   selection: {
-    title: 'Selection',
-    render: (value, handleCheckboxChange, item) => (
+    title: '',
+    render: (value, handleCheckboxChange, item, checked) => (
       <TableCell padding="checkbox">
         <Box display="flex">
           <Checkbox
             color="primary"
             onChange={() => handleCheckboxChange('selection', item._id)}
-            checked={false}
+            checked={checked}
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
         </Box>
@@ -47,7 +49,13 @@ export const columnsMetaData = {
   postBy: { title: 'Post By', render: (value) => row(value) },
   personPhone: { title: 'Phone', render: (value) => row(value) },
   locality: { title: 'Area', render: (value) => row(value) },
-  createdAt: { title: 'Created At', render: (value) => row(value) },
+  createdAt: {
+    title: 'Created At',
+    render: (value) => {
+      const dateValue = value ? format(new Date(value), 'MMM dd, yyyy') : '-';
+      return row(dateValue);
+    },
+  },
   listType: { title: 'Type', render: (value) => row(value) },
   propertyType: {
     title: 'Property Type',
@@ -57,7 +65,7 @@ export const columnsMetaData = {
   availableFrom: {
     title: 'Available From',
     render: (value) => {
-      const dateValue = value ? format(new Date(value), 'dd-MM-yyyy') : '-';
+      const dateValue = value ? format(new Date(value), 'MMM dd, yyyy') : '-';
       return row(dateValue);
     },
   },
@@ -91,7 +99,7 @@ export const columnsMetaData = {
       <TableCell padding="checkbox">
         <IconButton
           color="primary"
-          aria-label="upload picture"
+          aria-label="edit details"
           component="span"
           onClick={() => editRowDetails('actions', item)}
         >

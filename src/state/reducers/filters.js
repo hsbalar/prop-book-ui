@@ -5,10 +5,16 @@ import {
 } from '../actions/types';
 import { columns } from '../../modules/constants';
 
+const getColumns = () => {
+  const savedColumnsOrder = localStorage.getItem('columns');
+  if (savedColumnsOrder) return JSON.parse(savedColumnsOrder);
+  else return columns;
+};
+
 const initialState = {
   listType: 'Buy',
   inputSearch: '',
-  columns,
+  columns: [...getColumns()],
 };
 
 export default function filters(state = initialState, action) {
