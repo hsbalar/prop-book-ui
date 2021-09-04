@@ -67,7 +67,7 @@ function CustomizedSearchInput({
         color="primary"
         className={classes.iconButton}
         aria-label="search"
-        onClick={() => applyFilter()}
+        onClick={() => inputSearch.trim() && applyFilter()}
       >
         <SearchIcon />
       </IconButton>
