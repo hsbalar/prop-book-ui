@@ -1,7 +1,10 @@
 import axios from 'axios';
 import authHeader from './auth.header';
 
-const API_URL = 'http://localhost:4000/api';
+export const API_URL =
+  process.env.REACT_APP_DEV === 'true'
+    ? 'http://localhost:4000/api'
+    : 'https://prop-book-apis.herokuapp.com/api';
 
 const GET_URL = (url) => `${API_URL}${url}`;
 
