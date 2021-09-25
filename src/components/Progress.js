@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinearProgress, Typography } from '@material-ui/core';
+import { LinearProgress, Typography, Box } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 
@@ -13,14 +13,15 @@ const useStyles = makeStyles((theme) => {
       marginBottom: theme.spacing(5),
     },
     circleCheck: {
-      position: 'relative',
-      left: '46%',
+      display: 'block',
+      margin: 'auto',
       fontSize: theme.spacing(8),
       color: '#27AE60',
     },
     mainTitle: {
       display: 'flex',
       justifyContent: 'center',
+      textAlign: 'center',
       marginLeft: theme.spacing(5),
       marginRight: theme.spacing(5),
       marginTop: theme.spacing(1.5),
@@ -38,7 +39,7 @@ export const Progress = ({ status, title }) => {
   const classes = useStyles();
   if (status === 'progress') {
     return (
-      <>
+      <Box>
         <LinearProgress className={classes.progress} />
         <Typography className={classes.mainTitle} variant="h6">
           {title}
@@ -49,7 +50,7 @@ export const Progress = ({ status, title }) => {
           gutterBottom
           component="div"
         ></Typography>
-      </>
+      </Box>
     );
   }
   return <></>;
@@ -59,7 +60,7 @@ export const Completed = ({ status, title }) => {
   const classes = useStyles();
   if (status === 'success') {
     return (
-      <>
+      <Box>
         <CheckCircleIcon className={classes.circleCheck} />
         <Typography className={classes.mainTitle} variant="h6">
           {title}
@@ -70,7 +71,7 @@ export const Completed = ({ status, title }) => {
           gutterBottom
           component="div"
         ></Typography>
-      </>
+      </Box>
     );
   }
   return <></>;

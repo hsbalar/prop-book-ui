@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   button: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1.5),
     marginLeft: theme.spacing(1),
   },
   link: {

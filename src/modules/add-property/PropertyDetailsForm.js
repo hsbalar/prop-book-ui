@@ -34,11 +34,35 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  unitTypesDropdown: {
+    fontSize: theme.spacing(1.5),
+  },
 }));
+
+const notApartment = ['Plot', 'Farm House', 'Land'];
+
+const labelTypes = (type) => {
+  if (type === 'Buy')
+    return {
+      priceLabel: 'Total Budget',
+      unitLabel: 'Budget per',
+    };
+  else if (type === 'Sell')
+    return {
+      priceLabel: 'Total Price',
+      unitLabel: 'Price per',
+    };
+  else if (type === 'Rent')
+    return {
+      priceLabel: 'Total Rent',
+      unitLabel: 'Rent per',
+    };
+};
 
 function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
   const {
-    categoryType,
+    listType,
+    propertyType,
     bedrooms,
     noOfFloors,
     propertyFloorNo,
@@ -61,11 +85,13 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
     if (pricePerUnit) setPricePerUnitInWords(inWords(pricePerUnit));
   }, [pricePerUnit]);
 
+  const { unitLabel, priceLabel } = labelTypes(listType);
+
   return (
     <React.Fragment>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid container spacing={3}>
-          {categoryType !== 'Agricultural' ? (
+          {!notApartment.includes(propertyType) ? (
             <Grid item xs={12}>
               <Typography variant="body1">Bedrooms</Typography>
               <Box className={classes.chip}>
@@ -83,7 +109,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
           ) : (
             <></>
           )}
-          {categoryType !== 'Agricultural' ? (
+          {!notApartment.includes(propertyType) ? (
             <>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -133,7 +159,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel className={classes.unitTypesDropdown}>
               Area Unit Type
             </InputLabel>
             <Select
@@ -153,7 +179,7 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Total Price"
+              label={`${priceLabel}`}
               fullWidth
               value={price}
               type="number"
@@ -162,16 +188,18 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Price per / sq.ft."
-              fullWidth
-              value={pricePerUnit}
-              type="number"
-              helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
-              onChange={(e) =>
-                handleFieldChange({ pricePerUnit: e.target.value })
-              }
-            />
+            {listType !== 'Rent' && (
+              <TextField
+                label={`${unitLabel} / ${areaUnit}`}
+                fullWidth
+                value={pricePerUnit}
+                type="number"
+                helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
+                onChange={(e) =>
+                  handleFieldChange({ pricePerUnit: e.target.value })
+                }
+              />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <FormGroup>

@@ -32,12 +32,13 @@ export const columnsMetaData = {
       <TableCell>
         <Link
           component="button"
-          variant="body2"
+          variant="subtitle2"
+          style={{ fontWeight: 'bold' }}
           onClick={() => {
             viewRowDetails('projectName', item);
           }}
         >
-          {value}
+          {value || '....'}
         </Link>
       </TableCell>
     ),

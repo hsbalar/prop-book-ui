@@ -88,7 +88,7 @@ const Home = ({ metrix, getMetrix, filterChange }) => {
           color="textSecondary"
           component="p"
         >
-          Overview enquiries in Buy, Sell & on Rent
+          Overall enquiries from Buyers, Sellers & on Rental
         </Typography>
         <Box className={classes.heroButtons}>
           <Button
