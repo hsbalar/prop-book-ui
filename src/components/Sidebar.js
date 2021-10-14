@@ -3,6 +3,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import StorageIcon from '@material-ui/icons/Storage';
+import SearchIcon from '@material-ui/icons/Search';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -57,6 +58,11 @@ const routes = [
     text: 'View All Property',
     to: '/properties',
     icon: <StorageIcon />,
+  },
+  {
+    text: 'Advance Search',
+    to: '/advance-search',
+    icon: <SearchIcon />,
   },
 ];
 
