@@ -15,6 +15,7 @@ const initialState = {
   listType: 'Buy',
   inputSearch: '',
   columns: [...getColumns()],
+  advanceFilters: [],
 };
 
 export default function filters(state = initialState, action) {

@@ -86,32 +86,3 @@ export default connect(mapStateToProps, {
   getProperty: propertyActions.getProperty,
   applyFilter: propertyActions.applyFilter,
 })(CustomizedSearchInput);
-
-//   personName: '',  //
-//   personPhone: '',
-//   address: '',  //
-//   locality: '',//
-//   projectName: '',//
-//   about: '', //
-//   city: 'Surat', //
-
-//   postBy: 'Broker',
-//   categoryType: '',
-//   propertyType: '',
-//   bedrooms: '2 BHK',
-
-//   noOfFloors: '',
-//   propertyFloorNo: '',
-//   areaUnit: 'Square Feet',
-
-//   price: 0,
-//   pricePerUnit: 0,
-//   builtUpArea: 0,
-//   carpetArea: 0,
-
-//   isNewProperty: 'New',
-//   isNegotiable: false,
-
-//   availableFrom: '',
-
-// new field to be added ... is booking open ?
