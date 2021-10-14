@@ -13,7 +13,6 @@ import Home from './components/Home';
 import Loader from './components/Loader';
 import AddPropertyDetails from './modules/add-property';
 import AllProperty from './modules/all-property';
-import AdvanceSearch from './modules/advance-search';
 import { getData } from './state/services/api.service';
 
 import store from './state/store';
@@ -90,11 +89,6 @@ export default function App() {
                 exact
                 path="/add-property-details"
                 component={AddPropertyDetails}
-              />
-              <PrivateRoute
-                exact
-                path="/advance-search"
-                component={AdvanceSearch}
               />
               <Route exact path="/login" component={Login} />
               <Route path="*">

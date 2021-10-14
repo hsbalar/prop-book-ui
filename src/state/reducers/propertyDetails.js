@@ -20,7 +20,7 @@ const propertyDetails = {
   categoryType: '',
   propertyType: '',
   city: 'Surat',
-  bedrooms: '',
+  bedrooms: '2 BHK',
   noOfFloors: '',
   propertyFloorNo: '',
   about: '',
