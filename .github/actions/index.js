@@ -12,7 +12,8 @@ try {
       return console.log(err);
     }
     console.log(data);
-    core.setOutput('build_vars', data);
+    const spec = JSON.parse(data)
+    core.setOutput('build_vars', spec.envs);
   });
   // console.log(envs);
   // console.log(envs['url']);
