@@ -7,7 +7,7 @@ try {
   const envObj = core.getInput('envars');
   const envs = JSON.parse(envObj || '{}');
 
-  fs.readFile('/spec', 'utf8', function (err,data) {
+  fs.readFile('./spec', 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
