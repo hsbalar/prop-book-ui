@@ -1,14 +1,6 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
-inputs:
-  envars:
-    description: 'ENVs string'
-    required: true
-outputs:
-  port:
-    description: 'PORT'
-  url:
-    description: 'URL'
+
 runs:
   using: 'node12'
   main: 'index.js'

@@ -21,36 +21,19 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: 'install packages'
         run: |
           npm install @actions/core
-          npm install @actions/github
-
-      - name: Validate env variables
-        run: |
-          envars=$(echo "${{ github.event.inputs.envars }}" | xargs)
-          echo "BUILDENV=${envars}" >> $GITHUB_ENV
-          echo ${envars}
-          echo ${{env.BUILDENV}}
 
       - name: Hello world action step
         uses: ./.github/actions
         id: hello
-        with:
-          envars: ${{github.event.inputs.envars}}
-      # Use the output from the `hello` step
+
       - name: Get the output port
         run: |
           echo "The output - ${{fromJson(steps.hello.outputs.build_vars).TEST}}"
 
-      - name: Use Node.js
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - run: node index.js
 
