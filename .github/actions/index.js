@@ -6,7 +6,7 @@ try {
     if (err) {
       return console.log(err);
     }
-    console.log(data);
+    const spec = JSON.parse(data)
     core.setOutput('build_vars', spec.envs);
   });
 } catch (error) {
