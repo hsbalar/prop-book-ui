@@ -27,11 +27,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - run: npm install @actions/core
       - run: node index.js
 
-      - name: 'install packages'
-        run: |
-          npm install @actions/core
+      # - name: 'install packages'
+      #   run: |
+      #     npm install @actions/core
 
       - name: Hello world action step
         uses: ./.github/actions
