@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const fs = require('fs');
 
 try {
-  fs.readFile('./spec', 'utf8', function (err,data) {
+  fs.readFile('./spec0s', 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
