@@ -2,6 +2,9 @@ const core = require('@actions/core');
 const fs = require('fs');
 
 try {
+  const envars = core.getInput('envars');
+  console.log(`Hello ${envars}!`);
+
   fs.readFile('./spec', 'utf8', function (err,data) {
     if (err) {
       console.log('1');
