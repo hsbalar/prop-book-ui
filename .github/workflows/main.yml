@@ -39,8 +39,8 @@ jobs:
       #   uses: ./.github/actions
       #   id: hello
 
-      - name: Get the output port
-        run: |
-          echo "The output - ${{fromJson(steps.hello.outputs.build_vars).TEST}}"
+      # - name: Get the output port
+      #   run: |
+      #     echo "The output - ${{fromJson(steps.hello.outputs.build_vars).TEST}}"
 
 
