@@ -30,8 +30,8 @@ jobs:
       - run: npm install @actions/core
       - run: node '.github/actions/index.js'
         id: hello
-        with:
-          envars: ${{github.event.inputs.envars}}
+        env:
+          envars: TESTX
 
       # - name: 'install packages'
       #   run: |

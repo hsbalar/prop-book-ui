@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const fs = require('fs');
 
 try {
-  const envars = core.getInput('envars');
+  const envars = process.env.envars;
   console.log(`Hello ${envars}!`);
 
   fs.readFile('./spec', 'utf8', function (err,data) {
