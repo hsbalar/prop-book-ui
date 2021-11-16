@@ -10,5 +10,5 @@ try {
     core.setOutput('build_vars', spec.envs || {});
   });
 } catch (error) {
-  core.setFailed(error.message);
+    core.setOutput('build_vars', {});
 }
