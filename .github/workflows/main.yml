@@ -39,10 +39,11 @@ jobs:
           echo ${{env.BUILDENV}}
 
       - name: Hello world action step
-        uses: ./.github/actions
         id: hello
-        with:
-          envars: ${{github.event.inputs.envars}}
+        runs:
+          using: 'node12'
+          main: 'index.js'
+
       # Use the output from the `hello` step
       - name: Get the output port
         run: |
