@@ -1,5 +1,5 @@
 {
     "envs": {
-        "TEST": "test_001"
+        "TEST": "test_001x"
     }
 }
