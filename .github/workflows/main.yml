@@ -29,14 +29,15 @@ jobs:
           node-version: '14'
       - run: npm install @actions/core
       - run: node '.github/actions/index.js'
+        id: hello
 
       # - name: 'install packages'
       #   run: |
       #     npm install @actions/core
 
-      - name: Hello world action step
-        uses: ./.github/actions
-        id: hello
+      # - name: Hello world action step
+      #   uses: ./.github/actions
+      #   id: hello
 
       - name: Get the output port
         run: |
