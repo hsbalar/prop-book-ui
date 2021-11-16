@@ -4,11 +4,15 @@ const fs = require('fs');
 try {
   fs.readFile('./spec0s', 'utf8', function (err,data) {
     if (err) {
+      console.log('1');
+      core.setOutput('build_vars', {});
       return console.log(err);
     }
+    console.log('2');
     const spec = JSON.parse(data)
     core.setOutput('build_vars', spec.envs || {});
   });
 } catch (error) {
-    core.setOutput('build_vars', {});
+  console.log('3');
+  core.setOutput('build_vars', {});
 }
