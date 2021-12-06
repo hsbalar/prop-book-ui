@@ -38,7 +38,7 @@ export const columnsMetaData = {
             viewRowDetails('projectName', item);
           }}
         >
-          {value || '....'}
+          {value || '[View Details]'}
         </Link>
       </TableCell>
     ),

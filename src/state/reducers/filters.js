@@ -2,6 +2,7 @@ import {
   SET_FILTER_TYPE,
   CHANGE_FILTER_TEXT,
   SET_COLUMNS,
+  ADVANCE_FILTER_CHANGE,
 } from '../actions/types';
 import { columns } from '../../modules/constants';
 
@@ -15,7 +16,19 @@ const initialState = {
   listType: 'Buy',
   inputSearch: '',
   columns: [...getColumns()],
-  advanceFilters: [],
+  advanceFilters: {
+    projectName: '',
+    address: '',
+    city: '',
+    postBy: '',
+    propertyType: '',
+    bedrooms: '',
+    price: [0, 100],
+    pricePerUnit: [0, 100],
+    builtUpArea: [0, 100],
+    createdAt: [null, null],
+    availableFrom: [null, null],
+  },
 };
 
 export default function filters(state = initialState, action) {
@@ -36,6 +49,14 @@ export default function filters(state = initialState, action) {
       return {
         ...state,
         columns: [...action.fields],
+      };
+    case ADVANCE_FILTER_CHANGE:
+      return {
+        ...state,
+        advanceFilters: {
+          ...state.advanceFilters,
+          ...action.fields,
+        },
       };
     default:
       return state;

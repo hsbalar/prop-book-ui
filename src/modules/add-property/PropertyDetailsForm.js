@@ -10,15 +10,11 @@ import DoneIcon from '@material-ui/icons/Done';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import { inWords } from '../../state/services/utils';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { DesktopDatePicker } from '@material-ui/pickers';
 
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -89,167 +85,161 @@ function PropertyDetailsForm({ propertyDetails, handleFieldChange }) {
 
   return (
     <React.Fragment>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container spacing={3}>
-          {!notApartment.includes(propertyType) ? (
-            <Grid item xs={12}>
-              <Typography variant="body1">Bedrooms</Typography>
-              <Box className={classes.chip}>
-                {bedroomsData.map((item) => (
-                  <Chip
-                    key={item}
-                    label={item}
-                    color={bedrooms === item ? 'primary' : 'default'}
-                    deleteIcon={bedrooms === item ? <DoneIcon /> : null}
-                    onClick={() => handleFieldChange({ bedrooms: item })}
-                  />
-                ))}
-              </Box>
-            </Grid>
-          ) : (
-            <></>
-          )}
-          {!notApartment.includes(propertyType) ? (
-            <>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  label="No of Floors"
-                  value={noOfFloors}
-                  fullWidth
-                  onChange={(e) =>
-                    handleFieldChange({ noOfFloors: e.target.value })
-                  }
+      <Grid container spacing={3}>
+        {!notApartment.includes(propertyType) ? (
+          <Grid item xs={12}>
+            <Typography variant="body1">Bedrooms</Typography>
+            <Box className={classes.chip}>
+              {bedroomsData.map((item) => (
+                <Chip
+                  key={item}
+                  label={item}
+                  color={bedrooms === item ? 'primary' : 'default'}
+                  deleteIcon={bedrooms === item ? <DoneIcon /> : null}
+                  onClick={() => handleFieldChange({ bedrooms: item })}
                 />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  label="Property Building/Floor No."
-                  fullWidth
-                  value={propertyFloorNo}
-                  onChange={(e) =>
-                    handleFieldChange({ propertyFloorNo: e.target.value })
-                  }
-                />
-              </Grid>
-            </>
-          ) : (
-            <></>
-          )}
-          <Grid item xs={12} md={4}>
-            <TextField
-              label="Built-up Area"
-              value={builtUpArea}
-              fullWidth
-              type="number"
-              placeholder="Total area"
-              onChange={(e) =>
-                handleFieldChange({ builtUpArea: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              label="Carpet Area"
-              fullWidth
-              type="number"
-              value={carpetArea}
-              onChange={(e) =>
-                handleFieldChange({ carpetArea: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <InputLabel className={classes.unitTypesDropdown}>
-              Area Unit Type
-            </InputLabel>
-            <Select
-              labelId="unit list"
-              id="unit-list"
-              value={areaUnit}
-              fullWidth
-              label="Area Unit Type"
-              onChange={(e) => handleFieldChange({ areaUnit: e.target.value })}
-            >
-              {unitData.map((unit) => (
-                <MenuItem key={unit} value={unit}>
-                  {unit}
-                </MenuItem>
               ))}
-            </Select>
+            </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label={`${priceLabel}`}
-              fullWidth
-              value={price}
-              type="number"
-              helperText={priceInWords ? priceInWords : ''}
-              onChange={(e) => handleFieldChange({ price: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            {listType !== 'Rent' && (
+        ) : (
+          <></>
+        )}
+        {!notApartment.includes(propertyType) ? (
+          <>
+            <Grid item xs={12} md={6}>
               <TextField
-                label={`${unitLabel} / ${areaUnit}`}
+                label="No of Floors"
+                value={noOfFloors}
                 fullWidth
-                value={pricePerUnit}
-                type="number"
-                helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
                 onChange={(e) =>
-                  handleFieldChange({ pricePerUnit: e.target.value })
+                  handleFieldChange({ noOfFloors: e.target.value })
                 }
               />
-            )}
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={isNegotiable}
-                    onChange={(e) =>
-                      handleFieldChange({ isNegotiable: e.target.checked })
-                    }
-                    name="checkedA"
-                  />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="Property Building/Floor No."
+                fullWidth
+                value={propertyFloorNo}
+                onChange={(e) =>
+                  handleFieldChange({ propertyFloorNo: e.target.value })
                 }
-                label="Is Price Negotiable"
               />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="dd-MM-yyyy"
-              id="date-picker-inline"
-              label="Available From"
-              fullWidth
-              value={availableFrom ? new Date(availableFrom) : null}
-              onChange={(value) =>
-                handleFieldChange({
-                  availableFrom: value.toString(),
-                })
-              }
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <TextField
-              label="About"
-              fullWidth
-              value={about}
-              multiline
-              rows={4}
-              onChange={(e) => handleFieldChange({ about: e.target.value })}
-            />
-          </Grid>
-          <Divider />
+            </Grid>
+          </>
+        ) : (
+          <></>
+        )}
+        <Grid item xs={12} md={4}>
+          <TextField
+            label="Built-up Area"
+            value={builtUpArea}
+            fullWidth
+            type="number"
+            placeholder="Total area"
+            onChange={(e) => handleFieldChange({ builtUpArea: e.target.value })}
+          />
         </Grid>
-      </MuiPickersUtilsProvider>
+        <Grid item xs={12} md={4}>
+          <TextField
+            label="Carpet Area"
+            fullWidth
+            type="number"
+            value={carpetArea}
+            onChange={(e) => handleFieldChange({ carpetArea: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <InputLabel className={classes.unitTypesDropdown}>
+            Area Unit Type
+          </InputLabel>
+          <Select
+            labelId="unit list"
+            id="unit-list"
+            value={areaUnit}
+            fullWidth
+            label="Area Unit Type"
+            onChange={(e) => handleFieldChange({ areaUnit: e.target.value })}
+          >
+            {unitData.map((unit) => (
+              <MenuItem key={unit} value={unit}>
+                {unit}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            label={`${priceLabel}`}
+            fullWidth
+            value={price}
+            type="number"
+            helperText={priceInWords ? priceInWords : ''}
+            onChange={(e) => handleFieldChange({ price: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          {listType !== 'Rent' && (
+            <TextField
+              label={`${unitLabel} / ${areaUnit}`}
+              fullWidth
+              value={pricePerUnit}
+              type="number"
+              helperText={pricePerUnitInWords ? pricePerUnitInWords : ''}
+              onChange={(e) =>
+                handleFieldChange({ pricePerUnit: e.target.value })
+              }
+            />
+          )}
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={isNegotiable}
+                  onChange={(e) =>
+                    handleFieldChange({ isNegotiable: e.target.checked })
+                  }
+                  name="checkedA"
+                />
+              }
+              label="Is Price Negotiable"
+            />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <DesktopDatePicker
+            disableToolbar
+            variant="inline"
+            id="date-picker-inline"
+            label="Available From"
+            fullWidth
+            value={availableFrom ? new Date(availableFrom) : null}
+            renderInput={(props) => <TextField {...props} helperText="" />}
+            onChange={(value) =>
+              handleFieldChange({
+                availableFrom: value.toString(),
+              })
+            }
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <TextField
+            label="About"
+            fullWidth
+            value={about}
+            multiline
+            rows={4}
+            onChange={(e) => handleFieldChange({ about: e.target.value })}
+          />
+        </Grid>
+        <Divider />
+      </Grid>
     </React.Fragment>
   );
 }

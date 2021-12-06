@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { LocalizationProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -74,40 +76,46 @@ export default function App() {
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <Box className={classes.root}>
-          <CssBaseline />
-          {currentUser && (
-            <>
-              <Header />
-              <Sidebar />
-            </>
-          )}
-          <main className={currentUser ? classes.content : ''}>
-            <Switch>
-              <PrivateRoute exact path="/" component={Home} />
-              <PrivateRoute exact path="/properties" component={AllProperty} />
-              <PrivateRoute
-                exact
-                path="/add-property-details"
-                component={AddPropertyDetails}
-              />
-              <PrivateRoute
-                exact
-                path="/advance-search"
-                component={AdvanceSearch}
-              />
-              <Route exact path="/login" component={Login} />
-              <Route path="*">
-                <Page404 />
-              </Route>
-            </Switch>
-          </main>
-          {/* <Notification
+        <LocalizationProvider dateAdapter={DateFnsUtils}>
+          <Box className={classes.root}>
+            <CssBaseline />
+            {currentUser && (
+              <>
+                <Header />
+                <Sidebar />
+              </>
+            )}
+            <main className={currentUser ? classes.content : ''}>
+              <Switch>
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute
+                  exact
+                  path="/properties"
+                  component={AllProperty}
+                />
+                <PrivateRoute
+                  exact
+                  path="/add-property-details"
+                  component={AddPropertyDetails}
+                />
+                <PrivateRoute
+                  exact
+                  path="/advance-search"
+                  component={AdvanceSearch}
+                />
+                <Route exact path="/login" component={Login} />
+                <Route path="*">
+                  <Page404 />
+                </Route>
+              </Switch>
+            </main>
+            {/* <Notification
               onCloseHandler={() => store.dispatch(hideNotifications())}
             />
           */}
-          <Loader />
-        </Box>
+            <Loader />
+          </Box>
+        </LocalizationProvider>
       </Provider>
     </BrowserRouter>
   );

@@ -1,219 +1,323 @@
-import React, { useState } from 'react';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import Box from '@material-ui/core/Box';
-import Chip from '@material-ui/core/Chip';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+
 import CustomizedBreadcrumbs from '../../components/Breadcrumb';
-import { useTheme } from '@material-ui/core/styles';
+import {
+  TextFieldInput,
+  ChipsSelection,
+  RangeSelection,
+  BasicDateRangePicker,
+} from './inputFields';
+import * as filterActions from '../../state/actions/filters';
 
-// export const columns = {
-//   projectName: {
-//     name: 'projectName',
-//     label: 'Project Name',
-//   },
-//   personName: {
-//     name: 'personName',
-//     label: 'personName',
-//   },
-//   locality: {
-//     name: 'locality',
-//     label: 'locality',
-//   },
-//   {
-//     name: 'createdAt',
-//     label: 'createdAt',
-//   },
-//   {
-//     name: 'propertyType',
-//     label: 'propertyType',
-//   },
-//   {
-//     name: 'categoryType',
-//     label: 'categoryType',
-//   },
-//   {
-//     name: 'availableFrom',
-//     label: 'availableFrom',
-//   },
-//   {
-//     name: 'isNewProperty',
-//     label: 'isNewProperty',
-//   },
-//   {
-//     name: 'postBy',
-//     label: 'postBy',
-//   },
-//   {
-//     name: 'personPhone',
-//     label: 'personPhone',
-//   },
-//   {
-//     name: 'about',
-//     label: 'about',
-//   },
-//   {
-//     name: 'address',
-//     label: 'address',
-//   },
-//   {
-//     name: 'builtUpArea',
-//     label: 'builtUpArea',
-//   },
-//   {
-//     name: 'areaUnit',
-//     label: 'areaUnit',
-//   },
-//   {
-//     name: 'price',
-//     label: 'price',
-//   },
-//   {
-//     name: 'pricePerUnit',
-//     label: 'pricePerUnit',
-//   },
-//   {
-//     name: 'city',
-//     label: 'city',
-//   },
-//   {
-//     name: 'bedrooms',
-//     label: 'bedrooms',
-//   },
-//   {
-//     name: 'carpetArea',
-//     label: 'carpetArea',
-//   },
-//   {
-//     name: 'isNegotiable',
-//     label: 'isNegotiable',
-//   },
-//   {
-//     name: 'noOfFloors',
-//     label: 'noOfFloors',
-//   },
-//   {
-//     name: 'propertyFloorNo',
-//     label: 'propertyFloorNo',
-//   },
-// }
+// {
+//   name: 'createdAt',
+//   label: 'createdAt',
+// },
+// {
+//   name: 'propertyType',
+//   label: 'propertyType',
+// },
+// {
+//   name: 'categoryType',
+//   label: 'categoryType',
+// },
+// {
+//   name: 'availableFrom',
+//   label: 'availableFrom',
+// },
+// {
+//   name: 'isNewProperty',
+//   label: 'isNewProperty',
+// },
+// {
+//   name: 'postBy',
+//   label: 'postBy',
+// },
+// {
+//   name: 'personPhone',
+//   label: 'personPhone',
+// },
+// {
+//   name: 'about',
+//   label: 'about',
+// },
+// {
+//   name: 'builtUpArea',
+//   label: 'builtUpArea',
+// },
+// {
+//   name: 'areaUnit',
+//   label: 'areaUnit',
+// },
+// {
+//   name: 'price',
+//   label: 'price',
+// },
+// {
+//   name: 'pricePerUnit',
+//   label: 'pricePerUnit',
+// },
 
-const AdvanceSearch = () => {
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
+// {
+//   name: 'bedrooms',
+//   label: 'bedrooms',
+// },
+// {
+//   name: 'carpetArea',
+//   label: 'carpetArea',
+// },
+// {
+//   name: 'isNegotiable',
+//   label: 'isNegotiable',
+// },
+// {
+//   name: 'noOfFloors',
+//   label: 'noOfFloors',
+// },
+// {
+//   name: 'propertyFloorNo',
+//   label: 'propertyFloorNo',
+// },
+// };
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+}));
+
+const AdvanceSearch = (props) => {
+  const classes = useStyles();
+  const {
+    handleFieldChange,
+    projectName,
+    personName,
+    locality,
+    address,
+    city,
+    postBy,
+    propertyType,
+    bedrooms,
+    price,
+    pricePerUnit,
+    builtUpArea,
+    availableFrom,
+    createdAt,
+  } = props;
+
+  const _projectName = {
+    name: 'projectName',
+    label: 'Project Name',
+    value: projectName,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _personName = {
+    name: 'personName',
+    label: 'Person Name',
+    value: personName,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _locality = {
+    name: 'locality',
+    label: 'Area',
+    value: locality,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _address = {
+    name: 'address',
+    label: 'Address',
+    value: address,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _city = {
+    name: 'city',
+    label: 'City',
+    value: city,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _postBy = {
+    name: 'postBy',
+    label: 'Post By',
+    value: postBy,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _propertyType = {
+    name: 'propertyType',
+    label: 'Property Type',
+    value: propertyType,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _bedrooms = {
+    name: 'bedrooms',
+    label: 'No of Bedrooms',
+    value: bedrooms,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _price = {
+    name: 'price',
+    label: 'Price',
+    value: price,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _pricePerUnit = {
+    name: 'pricePerUnit',
+    label: 'Price Per Unit',
+    value: pricePerUnit,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _builtUpArea = {
+    name: 'builtUpArea',
+    label: 'Area',
+    value: builtUpArea,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _availableFrom = {
+    name: 'availableFrom',
+    label: 'Available From',
+    value: availableFrom,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const _createdAt = {
+    name: 'createdAt',
+    label: 'Created At',
+    value: createdAt,
+    handleChange: (name, value) => handleFieldChange({ [name]: value }),
+  };
+
+  const cols = [
+    {
+      _meta: _projectName,
+      render: () => <TextFieldInput {..._projectName} />,
     },
-  };
-
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    {
+      _meta: _personName,
+      render: () => <TextFieldInput {..._personName} />,
+    },
+    {
+      _meta: _locality,
+      render: () => <TextFieldInput {..._locality} />,
+    },
+    {
+      _meta: _address,
+      render: () => <TextFieldInput {..._address} />,
+    },
+    {
+      _meta: _city,
+      render: () => <TextFieldInput {..._city} />,
+    },
+    {
+      _meta: _postBy,
+      render: () => <ChipsSelection {..._postBy} />,
+    },
+    {
+      _meta: _propertyType,
+      render: () => <ChipsSelection {..._propertyType} />,
+    },
+    {
+      _meta: _bedrooms,
+      render: () => <ChipsSelection {..._bedrooms} />,
+    },
+    {
+      _meta: _price,
+      render: () => <RangeSelection {..._price} />,
+    },
+    {
+      _meta: _pricePerUnit,
+      render: () => <RangeSelection {..._pricePerUnit} />,
+    },
+    {
+      _meta: _builtUpArea,
+      render: () => <RangeSelection {..._builtUpArea} />,
+    },
+    {
+      _meta: _availableFrom,
+      render: () => <BasicDateRangePicker {..._availableFrom} />,
+    },
+    {
+      _meta: _createdAt,
+      render: () => <BasicDateRangePicker {..._createdAt} />,
+    },
   ];
-
-  const [personName, setPersonName] = useState([]);
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a the stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    );
-  };
-
-  const theme = useTheme();
   return (
     <>
       <CustomizedBreadcrumbs currentPage={'Advance Search'} />
-      <div>
-        <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
-          <Select
-            multiple
-            displayEmpty
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return <em>Placeholder</em>;
-              }
-
-              return selected.join(', ');
-            }}
-            variant="standard"
-            MenuProps={MenuProps}
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem disabled value="">
-              <em>Placeholder</em>
-            </MenuItem>
-            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
+      <Container maxWidth="lg" className={classes.container}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4} lg={3}>
+            {cols.map((col) => (
+              <Accordion key={col._meta.label}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography className={classes.heading}>
+                    {col._meta.label}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>{col.render()}</AccordionDetails>
+              </Accordion>
             ))}
-          </Select>
-        </FormControl>
-      </div>
+          </Grid>
+          <Grid item xs={12} md={8} lg={9}>
+            <Paper>asas</Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 };
 
-export default AdvanceSearch;
 // free text
 //   personName: '',  //
-//   personPhone: '',
+//   personPhone: '', X should not be
 //   address: '',  //
 //   locality: '',//
 //   projectName: '',//
-//   about: '', //
+//   about: '', // X
 //   city: 'Surat', //
 //   noOfFloors: '',
 //   propertyFloorNo: '',
 
 // fixed options
-//   postBy: 'Broker',
-//   categoryType: '',
-//   propertyType: '',
-//   bedrooms: '2 BHK',
+//   postBy: 'Broker', //
+//   categoryType: '',//
+//   propertyType: '', //
+//   bedrooms: '2 BHK',//
 
 //list
-//   areaUnit: 'Square Feet',
+//   areaUnit: 'Square Feet', XX
 
 // number
 //   price: 0, range
 //   pricePerUnit: 0, range
 //   builtUpArea: 0, range
-//   carpetArea: 0, range
+//   carpetArea: 0, range XX
 
 // Boolean
 //   isNewProperty: 'New',
@@ -224,3 +328,13 @@ export default AdvanceSearch;
 //   createdAt: ''
 
 // new field to be added ... is booking open ?
+
+function mapStateToProps(state) {
+  const { advanceFilters } = state.filters;
+
+  return advanceFilters;
+}
+
+export default connect(mapStateToProps, {
+  handleFieldChange: filterActions.handleAdvanceFilterChange,
+})(AdvanceSearch);
