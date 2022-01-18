@@ -4,8 +4,6 @@ import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import DoneIcon from '@material-ui/icons/Done';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import { DateRangePicker, DateRangeDelimiter } from '@material-ui/pickers';
 
 import {
@@ -13,12 +11,14 @@ import {
   bedroomsData,
   categoryData,
   propertyTypeData,
+  isNewPropertyData,
 } from '../constants';
 
 const chipsOptionsData = {
   postBy: postByData,
   bedrooms: bedroomsData,
   categoryType: categoryData,
+  isNewProperty: isNewPropertyData,
   propertyType: [
     ...propertyTypeData.Residential,
     'Apartment',
@@ -70,19 +70,27 @@ const ChipsSelection = ({ name, label, value, handleChange }) => {
 
 const RangeSelection = ({ name, label, value, handleChange }) => {
   return (
-    <>
-      <Box style={{ display: 'block', width: '100%' }}>
-        <Typography>
-          {value[0]} - {value[1]}
-        </Typography>
-        <Slider
-          value={value}
-          aria-labelledby="range-slider"
-          valueLabelDisplay="auto"
-          onChange={(e, newValue) => handleChange(name, newValue)}
-        />
-      </Box>
-    </>
+    <Box
+      style={{
+        display: 'flex',
+        alignContent: 'space-between',
+      }}
+    >
+      <TextField
+        label="From"
+        value={value[0]}
+        style={{ marginRight: '4px' }}
+        type="number"
+        onChange={(e) => handleChange(name, [e.target.value, value[1]])}
+      />
+      <TextField
+        label="To"
+        value={value[1]}
+        style={{ marginLeft: '4px' }}
+        type="number"
+        onChange={(e) => handleChange(name, [value[0], e.target.value])}
+      />
+    </Box>
   );
 };
 
@@ -95,9 +103,13 @@ const BasicDateRangePicker = ({ name, label, value, handleChange }) => {
       onChange={(newValue) => handleChange(name, newValue)}
       renderInput={(startProps, endProps) => (
         <React.Fragment>
-          <TextField {...startProps} />
+          <TextField
+            {...{ ...startProps, variant: 'standard', helperText: '' }}
+          />
           <DateRangeDelimiter> to </DateRangeDelimiter>
-          <TextField {...endProps} />
+          <TextField
+            {...{ ...endProps, variant: 'standard', helperText: '' }}
+          />
         </React.Fragment>
       )}
     />

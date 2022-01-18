@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import { format } from 'date-fns';
+import { getFormattedDate } from '../../state/services/utils';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -206,7 +206,7 @@ export default function Review({ propertyDetails }) {
               <Grid item xs={6}>
                 <Typography gutterBottom>
                   {availableFrom
-                    ? format(new Date(availableFrom), 'dd-MM-yyyy')
+                    ? getFormattedDate(availableFrom, 'dd-MM-yyyy')
                     : '-'}
                 </Typography>
               </Grid>

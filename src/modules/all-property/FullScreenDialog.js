@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import { format } from 'date-fns';
+import { getFormattedDate } from '../../state/services/utils';
 
 import Review from '../add-property/Review';
 
@@ -81,7 +81,7 @@ export default function FullScreenDialog({
           <Typography variant="h6">
             Created On :{' '}
             {propertyDetails &&
-              format(new Date(propertyDetails.createdAt), 'dd-MM-yyyy')}
+              getFormattedDate(propertyDetails.createdAt, 'dd-MM-yyyy')}
           </Typography>
           <Review propertyDetails={propertyDetails} />
         </Paper>

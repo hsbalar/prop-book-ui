@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 /* eslint-disable eqeqeq */
 const listA = [
   '',
@@ -68,3 +70,6 @@ export function inWords(num) {
       : '';
   return str;
 }
+
+export const getFormattedDate = (value, dateFormat = 'MMM dd, yyyy') =>
+  format(new Date(value), dateFormat);

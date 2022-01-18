@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-import { format } from 'date-fns';
+import { getFormattedDate } from '../../state/services/utils';
 
 export const row = (value) => (
   <TableCell style={{ maxWidth: 200 }}>{value || '-'}</TableCell>
@@ -26,16 +26,16 @@ export const columnsMetaData = {
       </TableCell>
     ),
   },
-  projectName: {
-    title: 'Project',
+  personName: {
+    title: 'Person Name',
     render: (value, viewRowDetails, item) => (
       <TableCell>
         <Link
           component="button"
-          variant="subtitle2"
+          variant="person-name"
           style={{ fontWeight: 'bold' }}
           onClick={() => {
-            viewRowDetails('projectName', item);
+            viewRowDetails('personName', item);
           }}
         >
           {value || '[View Details]'}
@@ -43,8 +43,8 @@ export const columnsMetaData = {
       </TableCell>
     ),
   },
-  personName: {
-    title: 'Person Name',
+  projectName: {
+    title: 'Project Name',
     render: (value) => row(value),
   },
   postBy: { title: 'Post By', render: (value) => row(value) },
@@ -53,7 +53,7 @@ export const columnsMetaData = {
   createdAt: {
     title: 'Created At',
     render: (value) => {
-      const dateValue = value ? format(new Date(value), 'MMM dd, yyyy') : '-';
+      const dateValue = value ? getFormattedDate(value) : '-';
       return row(dateValue);
     },
   },
@@ -66,7 +66,7 @@ export const columnsMetaData = {
   availableFrom: {
     title: 'Available From',
     render: (value) => {
-      const dateValue = value ? format(new Date(value), 'MMM dd, yyyy') : '-';
+      const dateValue = value ? getFormattedDate(value) : '-';
       return row(dateValue);
     },
   },
