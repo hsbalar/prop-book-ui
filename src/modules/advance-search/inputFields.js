@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import DoneIcon from '@material-ui/icons/Done';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateRangePicker, DateRangeDelimiter } from '@material-ui/pickers';
+import clsx from 'clsx';
 
 import {
   postByData,
@@ -33,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     display: 'flex',
     flexWrap: 'wrap',
+  },
+  inputs: {
+    display: 'flex',
+  },
+  betweenMargin: {
     '& > *': {
       margin: theme.spacing(0.5),
     },
@@ -54,14 +60,14 @@ const TextFieldInput = ({ name, label, value, handleChange }) => (
 const ChipsSelection = ({ name, label, value, handleChange }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.chip}>
+    <Box className={clsx(classes.chip, classes.betweenMargin)}>
       {chipsOptionsData[name].map((item) => (
         <Chip
           key={item}
           label={item}
           color={value === item ? 'primary' : 'default'}
           deleteIcon={value === item ? <DoneIcon /> : null}
-          onClick={() => handleChange(name, item)}
+          onClick={() => handleChange(name, value === item ? '' : item)}
         />
       ))}
     </Box>
@@ -69,24 +75,18 @@ const ChipsSelection = ({ name, label, value, handleChange }) => {
 };
 
 const RangeSelection = ({ name, label, value, handleChange }) => {
+  const classes = useStyles();
   return (
-    <Box
-      style={{
-        display: 'flex',
-        alignContent: 'space-between',
-      }}
-    >
+    <Box className={clsx(classes.inputs, classes.betweenMargin)}>
       <TextField
         label="From"
         value={value[0]}
-        style={{ marginRight: '4px' }}
         type="number"
         onChange={(e) => handleChange(name, [e.target.value, value[1]])}
       />
       <TextField
         label="To"
         value={value[1]}
-        style={{ marginLeft: '4px' }}
         type="number"
         onChange={(e) => handleChange(name, [value[0], e.target.value])}
       />

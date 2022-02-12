@@ -10,11 +10,14 @@ import StarIcon from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import SearchIcon from '@material-ui/icons/Search';
+import HomeIcon from '@material-ui/icons/Home';
+
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import * as actions from '../state/actions/propertyDetails';
-import * as filterActions from '../state/actions/filters';
+import * as actions from '../../state/actions/propertyDetails';
+import * as filterActions from '../../state/actions/filters';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -33,12 +36,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   heroButtons: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
     textAlign: 'center',
     marginTop: '16px',
   },
 }));
 
-const Home = ({ metrix, getMetrix, filterChange }) => {
+const Home = ({ metrix, getMetrix, filterChange, resetData }) => {
   const classes = useStyles();
   const history = useHistory();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,9 +100,21 @@ const Home = ({ metrix, getMetrix, filterChange }) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => history.push('/add-property-details')}
+            onClick={() => {
+              resetData();
+              history.push('/add-property-details');
+            }}
+            startIcon={<HomeIcon />}
           >
-            Add New Property
+            Add Property
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => history.push('/advance-search')}
+            startIcon={<SearchIcon />}
+          >
+            Search
           </Button>
         </Box>
       </Container>
@@ -145,5 +163,6 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   getMetrix: actions.getMetrix,
+  resetData: actions.resetEditRowData,
   filterChange: filterActions.handleFilterTypeChange,
 })(Home);

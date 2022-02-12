@@ -11,8 +11,9 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Page404 from './components/Page404';
 import Login from './components/Login';
-import Home from './components/Home';
 import Loader from './components/Loader';
+
+import Home from './modules/home';
 import AddPropertyDetails from './modules/add-property';
 import AllProperty from './modules/all-property';
 import AdvanceSearch from './modules/advance-search';

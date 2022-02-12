@@ -78,11 +78,10 @@ export const updateProperty = () => (dispatch, getState) => {
 
 export const deleteProperty = () => (dispatch, getState) => {
   const { tableData } = getState().propertyDetails;
-  const { listType } = getState().filters;
-  const { page, rowsPerPage, selection } = tableData;
+  const { selection } = tableData;
   postData(API_DELETE_PROPERTY, Object.keys(selection)).then(
     (res) => {
-      dispatch(getProperty({ listType, page, rowsPerPage }));
+      dispatch(getProperty());
       dispatch(setPropertyData({ selection: {} }));
     },
     (err) => {}

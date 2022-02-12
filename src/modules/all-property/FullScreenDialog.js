@@ -78,7 +78,7 @@ export default function FullScreenDialog({
       </AppBar>
       <Box className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography variant="h6">
+          <Typography variant="subtitle1" color="textSecondary">
             Created On :{' '}
             {propertyDetails &&
               getFormattedDate(propertyDetails.createdAt, 'dd-MM-yyyy')}

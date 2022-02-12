@@ -31,9 +31,8 @@ export const columnsMetaData = {
     render: (value, viewRowDetails, item) => (
       <TableCell>
         <Link
-          component="button"
-          variant="person-name"
-          style={{ fontWeight: 'bold' }}
+          component="a"
+          style={{ fontWeight: 'bold', cursor: 'pointer' }}
           onClick={() => {
             viewRowDetails('personName', item);
           }}

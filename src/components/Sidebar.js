@@ -11,8 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleDrawerToggle } from '../state/actions/auth';
@@ -68,7 +67,6 @@ const routes = [
 
 function Sidebar({ open, handleDrawerToggle }) {
   const classes = useStyles();
-  const theme = useTheme();
   const history = useHistory();
 
   return (
@@ -84,11 +82,7 @@ function Sidebar({ open, handleDrawerToggle }) {
     >
       <div className={classes.drawerHeader}>
         <IconButton onClick={handleDrawerToggle}>
-          {theme.direction === 'ltr' ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
+          <ChevronLeftIcon />
         </IconButton>
       </div>
       <Divider />

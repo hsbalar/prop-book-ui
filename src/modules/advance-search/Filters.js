@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Box from '@material-ui/core/Box';
+
 import { connect } from 'react-redux';
 
 import {
@@ -14,9 +16,25 @@ import {
 } from './InputFields';
 import * as filterActions from '../../state/actions/filters';
 
+import { makeStyles } from '@material-ui/core/styles';
+import { debounce } from 'lodash';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    [theme.breakpoints.down(780)]: {
+      maxHeight: '335px',
+      overflow: 'scroll',
+    },
+  },
+  hasTabContent: {
+    borderRight: '2px solid #3f51b5',
+  },
+}));
+
 const Filters = (props) => {
   const {
-    handleFieldChange,
+    handleAdvanceFilterChange,
+    applyFilter,
     projectName,
     personName,
     locality,
@@ -32,6 +50,16 @@ const Filters = (props) => {
     createdAt,
     isNewProperty,
   } = props;
+
+  useEffect(() => applyFilter(), [applyFilter]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const changeFilterHandler = useCallback(debounce(applyFilter, 1000), []);
+
+  const handleFieldChange = (value) => {
+    handleAdvanceFilterChange(value);
+    changeFilterHandler();
+  };
 
   const _projectName = {
     name: 'projectName',
@@ -61,6 +89,7 @@ const Filters = (props) => {
     handleChange: (name, value) => handleFieldChange({ [name]: value }),
   };
 
+  // eslint-disable-next-line no-unused-vars
   const _city = {
     name: 'city',
     label: 'City',
@@ -77,7 +106,7 @@ const Filters = (props) => {
 
   const _propertyNewOrResale = {
     name: 'isNewProperty',
-    label: 'is New Property/Project',
+    label: 'Is New Property/Project',
     value: isNewProperty,
     handleChange: (name, value) => handleFieldChange({ [name]: value }),
   };
@@ -89,6 +118,7 @@ const Filters = (props) => {
     handleChange: (name, value) => handleFieldChange({ [name]: value }),
   };
 
+  // eslint-disable-next-line no-unused-vars
   const _bedrooms = {
     name: 'bedrooms',
     label: 'No of Bedrooms',
@@ -112,7 +142,7 @@ const Filters = (props) => {
 
   const _builtUpArea = {
     name: 'builtUpArea',
-    label: 'Area',
+    label: 'Build Up Area',
     value: builtUpArea,
     handleChange: (name, value) => handleFieldChange({ [name]: value }),
   };
@@ -148,10 +178,10 @@ const Filters = (props) => {
       _meta: _address,
       render: () => <TextFieldInput {..._address} />,
     },
-    {
-      _meta: _city,
-      render: () => <TextFieldInput {..._city} />,
-    },
+    // {
+    //   _meta: _city,
+    //   render: () => <TextFieldInput {..._city} />,
+    // },
     {
       _meta: _postBy,
       render: () => <ChipsSelection {..._postBy} />,
@@ -164,10 +194,10 @@ const Filters = (props) => {
       _meta: _propertyType,
       render: () => <ChipsSelection {..._propertyType} />,
     },
-    {
-      _meta: _bedrooms,
-      render: () => <ChipsSelection {..._bedrooms} />,
-    },
+    // {
+    //   _meta: _bedrooms,
+    //   render: () => <ChipsSelection {..._bedrooms} />,
+    // },
     {
       _meta: _price,
       render: () => <RangeSelection {..._price} />,
@@ -189,10 +219,32 @@ const Filters = (props) => {
       render: () => <BasicDateRangePicker {..._createdAt} />,
     },
   ];
+
+  const classes = useStyles();
+
+  const hasTabContent = (field, value) => {
+    const isArrayTypeField = [
+      'price',
+      'pricePerUnit',
+      'builtUpArea',
+      'createdAt',
+      'availableFrom',
+    ].includes(field);
+    if (isArrayTypeField) return value[0] && value[1];
+    else return !!value;
+  };
+
   return (
-    <>
-      {cols.map((col) => (
-        <Accordion key={col._meta.label}>
+    <Box className={classes.container}>
+      {cols.map((col, i) => (
+        <Accordion
+          key={col._meta.name}
+          className={
+            hasTabContent(col._meta.name, col._meta.value)
+              ? classes.hasTabContent
+              : ''
+          }
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -203,7 +255,7 @@ const Filters = (props) => {
           <AccordionDetails>{col.render()}</AccordionDetails>
         </Accordion>
       ))}
-    </>
+    </Box>
   );
 };
 
@@ -214,5 +266,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  handleFieldChange: filterActions.handleAdvanceFilterChange,
+  handleAdvanceFilterChange: filterActions.handleAdvanceFilterChange,
+  applyFilter: filterActions.applyAdvanceFilter,
 })(Filters);

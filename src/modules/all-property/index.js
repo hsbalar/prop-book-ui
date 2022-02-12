@@ -21,17 +21,14 @@ import FullScreenDialog from './FullScreenDialog';
 import * as actions from '../../state/actions/propertyDetails';
 import { columnsMetaData } from './getColumns';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-  link: {
-    display: 'flex',
-  },
   tableContainer: {
-    marginTop: '16px',
+    marginTop: theme.spacing(2),
   },
-});
+}));
 
 function AllProperty({
   columns,
@@ -40,6 +37,7 @@ function AllProperty({
   setPropertyData,
   setEditRowData,
   deleteProperty,
+  resetData,
   tableData,
 }) {
   const classes = useStyles();
@@ -54,6 +52,10 @@ function AllProperty({
   const numSelected = Object.values(selection).filter((el) => el).length;
 
   const handleDeleteRows = () => {
+    setPropertyData({
+      page: 0,
+      rowsPerPage: 5,
+    });
     deleteProperty();
     setOpen(false);
   };
@@ -64,6 +66,7 @@ function AllProperty({
   };
 
   const editRowDetails = (item = null) => {
+    resetData();
     if (item) setEditRowData(item);
     setTimeout(() => history.push('/add-property-details'));
   };
@@ -76,7 +79,7 @@ function AllProperty({
 
   const handleRenderAction = (name, data) => {
     if (name === 'selection') onCheckboxChange(data);
-    else if (name === 'projectName') viewRowDetails(data);
+    else if (name === 'personName') viewRowDetails(data);
     else if (name === 'actions') editRowDetails(data);
   };
 
@@ -111,14 +114,14 @@ function AllProperty({
                     const value = row[colName];
                     const { render } = columnsMetaData[colName];
                     return (
-                      <>
+                      <React.Fragment key={colName}>
                         {render(
                           value,
                           handleRenderAction,
                           row,
                           selection[row._id] || false
                         )}
-                      </>
+                      </React.Fragment>
                     );
                   })}
                 </TableRow>
@@ -133,7 +136,7 @@ function AllProperty({
                       color="textPrimary"
                       gutterBottom
                     >
-                      No Records Found
+                      No Records Found...
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -145,15 +148,17 @@ function AllProperty({
                   total={total}
                   page={page}
                   rowsPerPage={rowsPerPage}
-                  handleChangePage={(e, pageNo) =>
-                    setPropertyData({ page: pageNo })
-                  }
-                  handleChangeRowsPerPage={(e) =>
+                  handleChangePage={(e, pageNo) => {
+                    setPropertyData({ page: pageNo });
+                    getProperty();
+                  }}
+                  handleChangeRowsPerPage={(e) => {
                     setPropertyData({
                       page: 0,
                       rowsPerPage: Number(e.target.value),
-                    })
-                  }
+                    });
+                    getProperty();
+                  }}
                 />
               </TableRow>
             </TableFooter>
@@ -186,4 +191,5 @@ export default connect(mapStateToProps, {
   setPropertyData: actions.setPropertyData,
   deleteProperty: actions.deleteProperty,
   setEditRowData: actions.setEditRowData,
+  resetData: actions.resetEditRowData,
 })(AllProperty);
